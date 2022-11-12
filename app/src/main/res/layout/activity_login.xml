@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".ui.login.LoginActivity">
+
+    <LinearLayout
+        android:background="@color/white"
+        android:padding="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <pl.droidsonroids.gif.GifImageView
+            android:layout_margin="10dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/log_in"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_200sdp"/>
+    </LinearLayout>
+
+    <TextView
+        android:shadowColor="@color/black"
+        android:shadowDy="4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_20sdp"
+        android:fontFamily="@font/allerta_stencil"
+        android:text="@string/login_qoutes"
+        android:textSize="@dimen/_20sdp" />
+
+    <LinearLayout
+        android:layout_marginTop="@dimen/_20sdp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <com.github.nikartm.button.FitButton
+            app:fb_fontFamilyRes="@font/ubuntu_bold"
+            android:id="@+id/btnLogin"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_40sdp"
+            android:layout_margin="32dp"
+            android:enabled="true"
+            android:gravity="center"
+            app:fb_cornerRadius="@dimen/_25sdp"
+            app:fb_divHeight="@dimen/_30sdp"
+            app:fb_rippleColor="#FBE9E7"
+            app:fb_iconWidth="28dp"
+            app:fb_iconHeight="28dp"
+            app:fb_iconPosition="left"
+            app:fb_iconMarginStart="20dp"
+            app:fb_iconMarginEnd="16dp"
+            app:fb_icon="@drawable/google"
+            app:fb_textPaddingStart="16dp"
+            app:fb_textColor="#FFF"
+            app:fb_text="Login With Google"
+            app:fb_backgroundColor="@color/colorPrimaryVariant"/>
+
+    </LinearLayout>
+</LinearLayout>

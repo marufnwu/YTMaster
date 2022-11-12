@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:scrollbars="none"
+    tools:context=".ui.userdetails.UserDetailsActivity">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <pl.droidsonroids.gif.GifImageView
+            android:layout_margin="@dimen/_15sdp"
+            android:src="@drawable/sign_up"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_150sdp"/>
+
+        <TextView
+            android:textColor="@color/colorPrimaryVariant"
+            android:shadowColor="@color/black"
+            android:shadowDy="4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_20sdp"
+            android:fontFamily="@font/allerta_stencil"
+            android:text="@string/signup_qoutes"
+            android:textSize="@dimen/_20sdp" />
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/fullName"
+            style="@style/MyTextInputLayout"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_50sdp"
+            android:hint="Full Name">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:fontFamily="@font/ubuntu_regular"
+                android:textColor="@color/colorPrimaryVariant"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/email"
+            style="@style/MyTextInputLayout"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_50sdp"
+            android:hint="Email">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:fontFamily="@font/ubuntu_regular"
+                android:textColor="@color/colorPrimaryVariant"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/city"
+            android:layout_margin="@dimen/_8sdp"
+            style="@style/MyTextInputLayout"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_50sdp"
+            android:hint="City">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:fontFamily="@font/ubuntu_regular"
+                android:textColor="@color/colorPrimaryVariant"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/state"
+            style="@style/MyTextInputLayout"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_50sdp"
+            android:hint="State">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:fontFamily="@font/ubuntu_regular"
+                android:textColor="@color/colorPrimaryVariant"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/country"
+            style="@style/MyTextInputLayout"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_50sdp"
+            android:hint="Country">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:fontFamily="@font/ubuntu_regular"
+                android:textColor="@color/colorPrimaryVariant"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/chanelLink"
+            style="@style/MyTextInputLayout"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_50sdp"
+            android:hint="Youtube Chanel Link">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:fontFamily="@font/ubuntu_regular"
+                android:textColor="@color/colorPrimaryVariant"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <LinearLayout
+            android:layout_marginTop="@dimen/_20sdp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <com.github.nikartm.button.FitButton
+                app:fb_fontFamilyRes="@font/ubuntu_bold"
+                android:id="@+id/btnSubmit"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_40sdp"
+                android:layout_margin="32dp"
+                android:enabled="true"
+                android:gravity="center"
+                app:fb_cornerRadius="@dimen/_25sdp"
+                app:fb_rippleColor="#FBE9E7"
+                app:fb_iconMarginStart="20dp"
+                app:fb_iconMarginEnd="16dp"
+                app:fb_textPaddingStart="16dp"
+                app:fb_textColor="#FFF"
+                app:fb_text="Finish"
+                app:fb_backgroundColor="@color/colorPrimaryVariant"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</ScrollView>

@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".ui.special_link.DomainCreateActivity">
+
+
+    <LinearLayout
+        android:layout_marginEnd="@dimen/_10sdp"
+        android:layout_marginStart="@dimen/_10sdp"
+        android:gravity="center"
+        android:layout_marginTop="@dimen/_12sdp"
+        android:padding="@dimen/_7sdp"
+        android:weightSum="4"
+        android:background="@drawable/round_white_bg"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <EditText
+            android:textSize="@dimen/_14sdp"
+            android:maxLength="30"
+            android:digits="0123456789qwertzuiopasdfghjklyxcvbnmQWERTZUIOPASDFGHJKLYXCVBNM-_ "
+            android:id="@+id/edtChannelName"
+            android:background="@color/transparent"
+            android:gravity="center"
+            android:textColor="@color/colorPrimaryVariant"
+            android:fontFamily="@font/ubuntu_bold"
+            android:text=""
+            android:hint="Channel Name"
+            android:layout_weight="3.5"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"/>
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_margin="@dimen/_8sdp"
+        android:background="@drawable/round_white_bg"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:padding="@dimen/_8sdp"
+            android:background="@color/colorPrimaryVariant"
+            android:gravity="center"
+            android:textSize="@dimen/_12sdp"
+            android:fontFamily="@font/ubuntu_bold"
+            android:textColor="@color/colorPrimary"
+            android:text="Select Validity"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_marginTop="@dimen/_8sdp"
+            android:id="@+id/recyPlanList"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+    <com.github.nikartm.button.FitButton
+        android:id="@+id/btnContinue"
+        app:fb_cornerRadius="@dimen/_8sdp"
+        android:padding="@dimen/_8sdp"
+        android:layout_margin="@dimen/_8sdp"
+        app:fb_textColor="@color/white"
+        app:fb_textSize="@dimen/_15sdp"
+        app:fb_backgroundColor="@color/colorPrimaryVariant"
+        android:gravity="center"
+        app:fb_text="Continue"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+</LinearLayout>

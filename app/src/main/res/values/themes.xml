@@ -1,0 +1,87 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Theme.YTMaster" parent="Theme.MaterialComponents.NoActionBar">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryVariant">@color/colorPrimaryVariant</item>
+        <item name="colorOnPrimary">#012580</item>
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">@color/teal_200</item>
+        <item name="colorSecondaryVariant">@color/teal_700</item>
+        <item name="colorOnSecondary">@color/black</item>
+        <!-- Status bar color. -->
+        <item name="android:statusBarColor">?attr/colorPrimary</item>
+        <!-- Customize your theme here. -->
+
+        <item name="windowNoTitle">true</item>
+        <item name="windowActionBar">false</item>
+        <item name="android:windowBackground">@drawable/main_window_bg</item>
+        <item name="android:windowLightStatusBar" tools:targetApi="M">true</item>
+
+    </style><style name="Theme.YTMaster.ActionBar" parent="Theme.YTMaster">
+        <item name="windowNoTitle">false</item>
+        <item name="windowActionBar">true</item>
+        <item name="android:windowBackground">@drawable/main_window_bg</item>
+
+    </style>
+
+    <style name="Theme.YTMasterNoActionBar" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">#290063</item>
+        <item name="colorPrimaryVariant">@color/purple_700</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">@color/teal_200</item>
+        <item name="colorSecondaryVariant">@color/teal_700</item>
+        <item name="colorOnSecondary">@color/black</item>
+        <!-- Status bar color. -->
+        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
+        <!-- Customize your theme here. -->
+    </style>
+
+
+    <style name="Theme.YTMasterNoActionBar.SplashScreen">
+        <item name="android:windowActionBar">false</item>
+        <item name="android:windowBackground">@drawable/splash_scereen_bg</item>
+    </style>
+
+
+    <style name="TextInputLayoutHintStyle" parent="TextAppearance.Design.Hint">
+        <item name="fontFamily">@font/ubuntu_bold</item>
+        <item name="android:fontFamily">@font/ubuntu_bold</item>
+        <item name="hintTextColor">@color/colorPrimaryVariant</item>
+    </style>
+
+
+    <style name="MyTextInputLayout" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="backgroundTint">@color/colorPrimaryVariant</item>
+        <item name="hintTextColor">@color/colorPrimaryVariant</item>
+        <item name="boxStrokeColor">@color/text_input_border</item>
+        <item name="hintTextAppearance">@style/TextInputLayoutHintStyle</item>
+        <item name="boxCornerRadiusBottomStart">@dimen/_20sdp</item>
+        <item name="boxCornerRadiusBottomEnd">@dimen/_20sdp</item>
+        <item name="boxCornerRadiusTopStart">@dimen/_20sdp</item>
+        <item name="boxCornerRadiusTopEnd">@dimen/_20sdp</item>
+        <item name="height">@dimen/_10sdp</item>
+        <item name="background">@color/design_default_color_primary_variant</item>
+        <item name="android:layout_marginTop">@dimen/_3sdp</item>
+        <item name="android:layout_marginStart">@dimen/_10sdp</item>
+        <item name="android:layout_marginEnd">@dimen/_10sdp</item>
+    </style>
+
+
+    <style name="LinkEdittext" parent="Widget.AppCompat.EditText">
+        <item name="fontFamily">@font/ubuntu_regular</item>
+        <item name="android:padding">@dimen/_5sdp</item>
+        <item name="android:background">@color/transparent</item>
+        <item name="android:textColorHint">@color/colorPrimaryVariantTransparent</item>
+        <item name="android:textColor">@color/colorPrimaryVariant</item>
+    </style>
+
+    <style name="WhiteCheckBox" parent="Widget.Material3.CompoundButton.CheckBox">
+        <item name="buttonTint">@color/colorPrimary</item>
+        <item name="android:color">@color/colorPrimary</item>
+        <item name="colorAccent">@color/colorPrimary</item>
+    </style>
+
+</resources>

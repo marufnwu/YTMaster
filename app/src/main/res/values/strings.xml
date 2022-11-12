@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">YTMaster</string>
+    <string name="login_qoutes"><font fgcolor='#407BFF'>SIGN OUT OF THE PAST</font> <font fgcolor='#2DBBDD'>\nLOGIN THE NEW</font></string>
+    <string name="signup_qoutes">Let\'s Introduce Yourself</string>
+    <string name="GOOGLE_WEB_CLIENT">654866510360-r7joip21ri0rrkhboes2htl239altaqi.apps.googleusercontent.com</string>
+    <string name="link_empty">Link Must Not Be Empty</string>
+    <string name="yt_link_invalid">Youtube Video Link Is not Valid</string>
+</resources>
