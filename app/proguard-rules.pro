@@ -20,6 +20,6 @@
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
 
--keepclassmembers class com.sikderithub.ytmaster.Model.* {
+-keepclassmembers class com.sikderithub.viewsgrow.Model.* {
   *;
 }

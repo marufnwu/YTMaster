@@ -255,6 +255,31 @@
                             android:layout_height="wrap_content"/>
                     </HorizontalScrollView>
 
+                    <LinearLayout
+                        android:visibility="gone"
+                        android:id="@+id/layoutDomainSuggestion"
+                        android:background="@drawable/round_white_bg"
+                        android:layout_marginTop="@dimen/_12sdp"
+                        android:layout_marginEnd="@dimen/_10sdp"
+                        android:layout_marginStart="@dimen/_10sdp"
+                        android:padding="@dimen/_8sdp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <ScrollView
+                            android:scrollbars="none"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+                            <com.google.android.material.chip.ChipGroup
+                                app:singleLine="false"
+                                android:scrollbars="horizontal"
+                                android:id="@+id/domainChipGroup"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"/>
+                        </ScrollView>
+
+                    </LinearLayout>
+
 
                     <LinearLayout
                         android:layout_marginEnd="@dimen/_10sdp"

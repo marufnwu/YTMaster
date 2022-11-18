@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.sikderithub.ytmaster">
+    package="com.sikderithub.viewsgrow">
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
-        android:name=".utils.MyApp"
+        android:name="com.sikderithub.viewsgrow.utils.MyApp"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -18,9 +18,20 @@
         android:theme="@style/Theme.YTMaster"
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
+        <activity
+            android:name=".ui.webview.GenericWebViewActivity"
+            android:exported="false"
+            android:label="@string/title_activity_generic_web_view"
+            android:theme="@style/Theme.YTMaster.ActionBar" />
+        <activity
+            android:name="com.sikderithub.viewsgrow.ui.my_link.MyLinkActivity"
+            android:exported="false"
+            android:launchMode="singleTask"
+            android:parentActivityName="com.sikderithub.viewsgrow.ui.profile.ProfileActivity"
+            android:theme="@style/Theme.YTMaster.ActionBar" />
 
         <service
-            android:name=".notification.NotificationService"
+            android:name="com.sikderithub.viewsgrow.notification.NotificationService"
             android:enabled="true"
             android:exported="true">
             <intent-filter>
@@ -29,42 +40,49 @@
         </service>
 
         <activity
+            android:name="com.sikderithub.viewsgrow.ui.special_link.DomainCreateActivity"
+            android:exported="false"
             android:label="Create Own Domain"
-            android:name=".ui.special_link.DomainCreateActivity"
-            android:theme="@style/Theme.YTMaster.ActionBar"
-            android:exported="false" />
+            android:launchMode="singleTask"
+            android:parentActivityName="com.sikderithub.viewsgrow.ui.main.MainActivity"
+            android:theme="@style/Theme.YTMaster.ActionBar" />
         <activity
-            android:name=".ui.channel_list.ChannelListActivity"
+            android:name="com.sikderithub.viewsgrow.ui.channel_list.ChannelListActivity"
             android:exported="false"
             android:label="Channels"
-            android:parentActivityName=".ui.main.MainActivity"
+            android:launchMode="singleTask"
+            android:parentActivityName="com.sikderithub.viewsgrow.ui.main.MainActivity"
             android:theme="@style/Theme.YTMaster.ActionBar" />
         <activity
-            android:name=".ui.all_link.AllLinkActivity"
+            android:name="com.sikderithub.viewsgrow.ui.all_link.AllLinkActivity"
             android:exported="false"
             android:label="Videos"
-            android:parentActivityName=".ui.main.MainActivity"
+            android:launchMode="singleTop"
+            android:parentActivityName="com.sikderithub.viewsgrow.ui.main.MainActivity"
             android:theme="@style/Theme.YTMaster.ActionBar" />
         <activity
-            android:name=".ui.profile.ProfileActivity"
+            android:name="com.sikderithub.viewsgrow.ui.profile.ProfileActivity"
             android:exported="false"
             android:label="Profile"
-            android:parentActivityName=".ui.main.MainActivity"
+            android:launchMode="singleTask"
+            android:parentActivityName="com.sikderithub.viewsgrow.ui.main.MainActivity"
             android:theme="@style/Theme.YTMaster.ActionBar" />
         <activity
-            android:name=".ui.generate_link.GenerateLinkActivity"
+            android:name="com.sikderithub.viewsgrow.ui.generate_link.GenerateLinkActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.userdetails.UserDetailsActivity"
+            android:name="com.sikderithub.viewsgrow.ui.userdetails.UserDetailsActivity"
+            android:exported="false"
+            android:launchMode="singleTask" />
+        <activity
+            android:name="com.sikderithub.viewsgrow.ui.login.LoginActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.login.LoginActivity"
-            android:exported="false" />
+            android:name="com.sikderithub.viewsgrow.ui.introduction.IntroductionActivity"
+            android:exported="false"
+            android:launchMode="singleTask" />
         <activity
-            android:name=".ui.introduction.IntroductionActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ui.splash.SplashActivity"
+            android:name="com.sikderithub.viewsgrow.ui.splash.SplashActivity"
             android:exported="true"
             android:theme="@style/Theme.YTMasterNoActionBar.SplashScreen">
             <intent-filter>
@@ -74,8 +92,9 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.main.MainActivity"
-            android:exported="false" />
+            android:name="com.sikderithub.viewsgrow.ui.main.MainActivity"
+            android:exported="false"
+            android:launchMode="singleTask" />
 
         <meta-data
             android:name="preloaded_fonts"

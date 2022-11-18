@@ -72,7 +72,7 @@
 
     <style name="LinkEdittext" parent="Widget.AppCompat.EditText">
         <item name="fontFamily">@font/ubuntu_regular</item>
-        <item name="android:padding">@dimen/_5sdp</item>
+        <item name="android:padding">@dimen/_2sdp</item>
         <item name="android:background">@color/transparent</item>
         <item name="android:textColorHint">@color/colorPrimaryVariantTransparent</item>
         <item name="android:textColor">@color/colorPrimaryVariant</item>
@@ -83,5 +83,26 @@
         <item name="android:color">@color/colorPrimary</item>
         <item name="colorAccent">@color/colorPrimary</item>
     </style>
+
+    <style name="BottomSheetDialog" parent="Theme.MaterialComponents.Light.BottomSheetDialog">
+        <item name="backgroundTint">@color/transparent</item>
+        <item name="android:elevation">8dp</item>
+        <item name="elevation">0dp</item>
+        <item name="android:topLeftRadius">9dp</item>
+    </style>
+
+    <style name="CustomBottomSheetDialogTheme" parent="Theme.Design.Light.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/CustomBottomSheetStyle</item>
+    </style>
+
+    <style name="CustomBottomSheetStyle" parent="Widget.Design.BottomSheet.Modal">
+        <item name="android:background">@android:color/transparent</item>
+    </style>
+    <style name="Theme.YTMaster.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+    <style name="Theme.YTMaster.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+    <style name="Theme.YTMaster.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
 </resources>

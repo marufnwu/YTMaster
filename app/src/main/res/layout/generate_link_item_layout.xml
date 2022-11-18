@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView android:orientation="vertical"
-    android:layout_margin="@dimen/_10sdp"
+    android:id="@+id/mainCard"
+    android:layout_margin="@dimen/_3sdp"
     app:cardCornerRadius="@dimen/_15sdp"
-    android:outlineSpotShadowColor="@color/colorPrimaryVariant"
     android:layout_width="@dimen/_200sdp"
     android:layout_height="wrap_content"
     xmlns:android="http://schemas.android.com/apk/res/android"
@@ -11,11 +11,10 @@
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
 
 
         <LinearLayout
-            android:background="#E81A58F6"
             android:padding="@dimen/_8sdp"
             android:orientation="vertical"
             android:layout_width="match_parent"
@@ -26,7 +25,6 @@
                 android:id="@+id/txtMetaTitle"
                 android:fontFamily="@font/ubuntu_regular"
                 android:textSize="@dimen/_8sdp"
-                android:textColor="@color/white"
                 android:gravity="center"
                 android:text="How To Create Youtube Chanel And Earn money"
                 android:layout_width="match_parent"
@@ -66,7 +64,6 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/ubuntu_regular"
                         android:text="Facebook"
-                        android:textColor="@color/colorPrimary"
                         android:textSize="@dimen/_9sdp" />
 
 
@@ -90,7 +87,6 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/ubuntu_regular"
                         android:text="Clicks 0"
-                        android:textColor="@color/colorPrimary"
                         android:textSize="@dimen/_9sdp" />
 
 
@@ -114,7 +110,6 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/ubuntu_regular"
                         android:text="2 days ago"
-                        android:textColor="@color/colorPrimary"
                         android:textSize="@dimen/_9sdp" />
 
 
@@ -127,7 +122,7 @@
                 android:layout_marginTop="@dimen/_12sdp"
                 android:padding="@dimen/_5sdp"
                 android:weightSum="4"
-                android:background="@drawable/round_white_bg"
+                android:background="@drawable/round_pripary_variant_border"
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">

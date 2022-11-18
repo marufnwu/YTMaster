@@ -15,7 +15,7 @@
         android:layout_marginTop="@dimen/_12sdp"
         android:padding="@dimen/_7sdp"
         android:weightSum="4"
-        android:background="@drawable/round_white_bg"
+        android:background="@drawable/round_pripary_variant_border"
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">

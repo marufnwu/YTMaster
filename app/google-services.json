@@ -7,12 +7,57 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:654866510360:android:4eeaf7288bb6ade881896d",
+        "mobilesdk_app_id": "1:654866510360:android:9d038f1e5b67f94681896d",
         "android_client_info": {
-          "package_name": "com.sikderithub.ytmaster"
+          "package_name": "com.sikderithub.viewsgrow"
         }
       },
       "oauth_client": [
+        {
+          "client_id": "654866510360-aes6fai0djhjpu7ekdl78j2s79r1sh93.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.sikderithub.viewsgrow",
+            "certificate_hash": "77c95ac68fe8531d44ff6addae0baa71bedd7e88"
+          }
+        },
+        {
+          "client_id": "654866510360-r7joip21ri0rrkhboes2htl239altaqi.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAhsTp61bgRMPtaARYxeslkjv0UDa6iG4I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "654866510360-r7joip21ri0rrkhboes2htl239altaqi.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:654866510360:android:857921a3cae4c7f781896d",
+        "android_client_info": {
+          "package_name": "com.sikderithub.ytmasteradmin"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "654866510360-un0vvooju097f06nq5s39q7ehiset9ff.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.sikderithub.ytmasteradmin",
+            "certificate_hash": "77c95ac68fe8531d44ff6addae0baa71bedd7e88"
+          }
+        },
         {
           "client_id": "654866510360-r7joip21ri0rrkhboes2htl239altaqi.apps.googleusercontent.com",
           "client_type": 3

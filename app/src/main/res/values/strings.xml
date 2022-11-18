@@ -1,8 +1,20 @@
 <resources>
-    <string name="app_name">YTMaster</string>
+    <string name="app_name">Views Grow</string>
     <string name="login_qoutes"><font fgcolor='#407BFF'>SIGN OUT OF THE PAST</font> <font fgcolor='#2DBBDD'>\nLOGIN THE NEW</font></string>
     <string name="signup_qoutes">Let\'s Introduce Yourself</string>
     <string name="GOOGLE_WEB_CLIENT">654866510360-r7joip21ri0rrkhboes2htl239altaqi.apps.googleusercontent.com</string>
     <string name="link_empty">Link Must Not Be Empty</string>
     <string name="yt_link_invalid">Youtube Video Link Is not Valid</string>
+    <string name="title_activity_generic_web_view">GenericWebViewActivity</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+
+    <string name="privacy_url">https://newvideo.link/Privacy-Policy.html</string>
+    <string name="privacy_title">Privacy Policy</string>
 </resources>

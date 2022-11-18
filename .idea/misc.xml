@@ -4,10 +4,23 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Android Projects/YT Master/app/src/main/res/drawable/bottom_sheet_bg.xml" value="0.1485" />
+        <entry key="..\:/Android Projects/YT Master/app/src/main/res/drawable/round_pripary_variant_border.xml" value="0.159" />
+        <entry key="..\:/Android Projects/YT Master/app/src/main/res/layout/activity_all_link.xml" value="0.25" />
+        <entry key="..\:/Android Projects/YT Master/app/src/main/res/layout/activity_domain_create.xml" value="0.25" />
+        <entry key="..\:/Android Projects/YT Master/app/src/main/res/layout/activity_generate_link.xml" value="0.25" />
+        <entry key="..\:/Android Projects/YT Master/app/src/main/res/layout/activity_generic_webview.xml" value="0.25" />
         <entry key="..\:/Android Projects/YT Master/app/src/main/res/layout/activity_login.xml" value="0.25" />
         <entry key="..\:/Android Projects/YT Master/app/src/main/res/layout/activity_main.xml" value="0.25" />
+        <entry key="..\:/Android Projects/YT Master/app/src/main/res/layout/activity_my_link.xml" value="0.25" />
         <entry key="..\:/Android Projects/YT Master/app/src/main/res/layout/activity_profile.xml" value="0.25" />
+        <entry key="..\:/Android Projects/YT Master/app/src/main/res/layout/channel_item_layout.xml" value="0.10989583333333333" />
+        <entry key="..\:/Android Projects/YT Master/app/src/main/res/layout/custom_loading_dialog_layout.xml" value="0.10989583333333333" />
+        <entry key="..\:/Android Projects/YT Master/app/src/main/res/layout/dialog_generic.xml" value="0.25" />
+        <entry key="..\:/Android Projects/YT Master/app/src/main/res/layout/generate_link_item_layout.xml" value="0.25" />
+        <entry key="..\:/Android Projects/YT Master/app/src/main/res/layout/layout_link_thumbnail.xml" value="0.10989583333333333" />
         <entry key="..\:/Android Projects/YT Master/app/src/main/res/layout/layout_nav_bottom_sheet.xml" value="0.24895833333333334" />
+        <entry key="..\:/Android Projects/YT Master/app/src/main/res/layout/round_channel_item_layout.xml" value="0.25" />
+        <entry key="..\:/Android Projects/YT Master/app/src/main/res/layout/round_user_item_layout.xml" value="0.10989583333333333" />
       </map>
     </option>
   </component>

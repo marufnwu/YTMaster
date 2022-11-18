@@ -11,7 +11,7 @@
         android:id="@+id/imgProfile"
         app:civ_border_width="@dimen/_2sdp"
         app:civ_border_color="@color/colorPrimaryVariant"
-        android:src="@drawable/profile_gif"
+        android:src="@drawable/loadin_small"
         android:layout_width="@dimen/_50sdp"
         android:layout_height="@dimen/_50sdp"/>
 

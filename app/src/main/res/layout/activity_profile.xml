@@ -175,16 +175,33 @@
 
                             </LinearLayout>
 
-                            <TextView
+                            <LinearLayout
                                 android:visibility="gone"
-                                android:id="@+id/txtNoInformation"
-                                android:layout_margin="@dimen/_20sdp"
-                                android:layout_gravity="center"
-                                android:textSize="@dimen/_14sdp"
-                                android:textColor="@color/colorPrimaryVariant"
-                                android:text="No Information Found"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"/>
+                                android:id="@+id/layoutChNotFound"
+                                android:paddingBottom="@dimen/_15sdp"
+                                android:orientation="vertical"
+                                android:gravity="center"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content">
+                                <TextView
+                                    android:id="@+id/txtNoInformation"
+                                    android:layout_margin="@dimen/_20sdp"
+                                    android:layout_gravity="center"
+                                    android:textSize="@dimen/_14sdp"
+                                    android:textColor="@color/colorPrimaryVariant"
+                                    android:text="You  didn't add any channel"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"/>
+
+                                <androidx.appcompat.widget.AppCompatButton
+                                    android:textColor="@color/colorPrimaryVariant"
+                                    android:text="Add Channel"
+                                    android:background="@drawable/round_pripary_variant_border"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"/>
+                            </LinearLayout>
+
+
 
                             <ProgressBar
                                 android:visibility="gone"
