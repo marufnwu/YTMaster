@@ -31,7 +31,7 @@
             android:layout_margin="@dimen/_10sdp"
             android:gravity="center"
             android:padding="@dimen/_8sdp"
-            android:textColor="@color/colorPrimaryVariant"
+            android:textColor="@color/black"
             android:textSize="@dimen/_14sdp" />
 
         <FrameLayout

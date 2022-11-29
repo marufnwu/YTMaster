@@ -23,3 +23,7 @@
 -keepclassmembers class com.sikderithub.viewsgrow.Model.* {
   *;
 }
+
+-keepclassmembers class com.sikderithub.viewsgrow.notification.* {
+  *;
+}

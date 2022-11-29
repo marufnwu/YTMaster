@@ -5,10 +5,12 @@ import android.content.Context
 import android.content.Intent
 import android.content.res.Resources
 import android.net.Uri
+import androidx.core.content.ContextCompat.startActivity
 import com.sikderithub.viewsgrow.Model.Login
 import com.sikderithub.viewsgrow.Model.Profile
 import com.sikderithub.viewsgrow.R
 import com.sikderithub.viewsgrow.ui.all_link.AllLinkActivity
+import com.sikderithub.viewsgrow.ui.login.LoginActivity
 import com.sikderithub.viewsgrow.ui.main.MainActivity
 import com.sikderithub.viewsgrow.ui.splash.SplashActivity
 import com.sikderithub.viewsgrow.ui.userdetails.UserDetailsActivity
@@ -285,6 +287,20 @@ object CommonMethod {
         val intent = Intent(context, AllLinkActivity::class.java)
 
         context.startActivity(intent)
+    }
+
+    fun showLoginDialog(context: Context, bodyText:String="Are you want to create custom premium domain?") {
+        GenericDialog.make(context)
+            .setCancelable(true)
+            .setBodyText(bodyText)
+            .setIconType(GenericDialog.IconType.WARNING)
+            .setPositiveButton("Login Now") {
+                context.startActivity(Intent(context, LoginActivity::class.java))
+            }.setNegativeButton("Cancel") {
+                it?.hideDialog()
+            }
+            .build()
+            .showDialog()
     }
 
 }

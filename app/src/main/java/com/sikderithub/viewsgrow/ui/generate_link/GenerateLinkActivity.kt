@@ -26,7 +26,6 @@ import com.github.drjacky.imagepicker.ImagePicker
 import com.github.nikartm.button.FitButton
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
-import com.google.android.material.chip.Chip
 import com.google.android.material.textfield.TextInputEditText
 import com.google.gson.Gson
 import com.nguyencse.URLEmbeddedTask
@@ -36,6 +35,7 @@ import com.sikderithub.viewsgrow.R
 import com.sikderithub.viewsgrow.databinding.ActivityGenerateLinkBinding
 import com.sikderithub.viewsgrow.repo.network.MyApi
 import com.sikderithub.viewsgrow.ui.login.LoginActivity
+import com.sikderithub.viewsgrow.ui.special_link.DomainCreateActivity
 import com.sikderithub.viewsgrow.utils.*
 import com.sikderithub.viewsgrow.utils.MyExtensions.setLocalImage
 import com.sikderithub.viewsgrow.utils.MyExtensions.setUrl
@@ -47,6 +47,17 @@ import retrofit2.Response
 import java.io.File
 
 class GenerateLinkActivity : AppCompatActivity() {
+
+    enum class DomainType{
+        REGISTERED,
+        SUGGESTION
+    }
+
+    enum class SubDomainType{
+        REGISTERED,
+        SUGGESTION
+    }
+
     private var subDomainDialog: Dialog? = null
     private var suffixCheckcall: Call<GenericResponse<Boolean>>? = null
     private var account: GoogleSignInAccount? = null
@@ -59,6 +70,9 @@ class GenerateLinkActivity : AppCompatActivity() {
     private var thumbUrl :String? = null
     lateinit var loadingDialog: LoadingDialog
     var suffixAvailable = false
+
+    private var domainType : DomainType?  = null
+    private var subDomainType : SubDomainType?  = null
 
      data class LinkMetaData(
         var loading : Boolean = true,
@@ -120,7 +134,7 @@ class GenerateLinkActivity : AppCompatActivity() {
             val type = CommonMethod.getLinkPlatform(it)
             if(type==LinkType.YOUTUBE){
                 CommonMethod.getYtVideoIdFromLink(it)?.let {
-                    viewModel.getDomainSuggestion(it)
+                    //viewModel.getDomainSuggestion(it)
                 }
             }
         }
@@ -129,22 +143,27 @@ class GenerateLinkActivity : AppCompatActivity() {
 
     private fun addObserver() {
         viewModel.linkRef.observe(this){state->
-            when(state){
-                is ScreenState.Success->{
-                    loadingDialog.hide()
-                    setDomains(state.data!!.domains)
-                    setSubdomain(state.data.subdomainRes)
-                }
-                is ScreenState.Loading->{
-                    loadingDialog.show()
-                }
-                is ScreenState.Error->{
-                    loadingDialog.hide()
-                    state.message?.let {
-                        shortToast(it)
+            state?.let {
+
+                when(state){
+                    is ScreenState.Success->{
+                        loadingDialog.hide()
+                        setDomains(state.data!!.domains)
+                        setSubdomain(state.data.subdomainRes, state.data.subDomainSuggestions)
+                        addDomainSuggestions(state.data.domainSuggestions)
+                    }
+                    is ScreenState.Loading->{
+                        loadingDialog.show()
+                    }
+                    is ScreenState.Error->{
+                        loadingDialog.hide()
+                        state.message?.let {
+                            shortToast(it)
+                        }
                     }
                 }
             }
+
         }
 
         viewModel.fullLinkData.observe(this){
@@ -333,15 +352,18 @@ class GenerateLinkActivity : AppCompatActivity() {
         }
     }
 
+    private fun subdomain(subdomainRes: SubdomainRes, channelName: String) {
+
+    }
+
     private fun addDomainSuggestions(domains: List<String>?) {
         domains?.let {
             if(it.isNotEmpty()){
                 it.forEach{
-                    val chip = Chip(this)
-                    chip.text = it
-                    chip.chipStartPadding = 0f
-                    chip.closeIcon = null
-                    binding.domainChipGroup.addView(chip)
+                    var radioButton: RadioButton?
+                    radioButton = RadioButton(this)
+                    radioButton.text = it
+                    binding.domainSugRadioGroup.addView(radioButton)
                 }
 
                 binding.layoutDomainSuggestion.visibility = View.VISIBLE
@@ -361,11 +383,26 @@ class GenerateLinkActivity : AppCompatActivity() {
 
     }
 
-    private fun setSubdomain(subdomainRes: SubdomainRes) {
-        if(subdomainRes.error){
-            binding.subdomainRadioGroup.visibility = View.GONE
+    private fun setSubdomain(subdomainRes: SubdomainRes, subdomainSugg: List<String>) {
+
+        if(subdomainRes.error || subdomainRes.subdomains.isEmpty()){
+            binding.layoutSubdomain.visibility = View.GONE
             binding.txtSubdomain.visibility = View.VISIBLE
             binding.txtSubdomain.text = subdomainRes.msg
+
+            if(subdomainSugg.isNotEmpty()){
+                binding.layoutSubdomainSugg.visibility = View.VISIBLE
+                binding.txtSubdomainSugg.visibility = View.GONE
+
+                subdomainSugg.forEach {
+
+                    val radioButton = RadioButton(this)
+                    radioButton.text = it
+                    binding.subdomainSuggRadioGroup.addView(radioButton)
+                }
+            }
+
+
         }else{
             if(subdomainRes.subdomains.isEmpty()){
                 binding.subdomainRadioGroup.visibility = View.GONE
@@ -373,7 +410,7 @@ class GenerateLinkActivity : AppCompatActivity() {
                 binding.txtSubdomain.text = "You haven't add any subdomain"
 
             }else{
-                binding.subdomainRadioGroup.visibility = View.VISIBLE
+                binding.layoutSubdomain.visibility = View.VISIBLE
                 binding.txtSubdomain.visibility = View.GONE
 
                 var radioButton: RadioButton?
@@ -389,7 +426,6 @@ class GenerateLinkActivity : AppCompatActivity() {
 
 
     private fun setDomains(domains: List<Domain>) {
-        shortToast(domains.size.toString())
         var radioButton: RadioButton?
         for(domain in domains){
             radioButton = RadioButton(this)
@@ -402,25 +438,28 @@ class GenerateLinkActivity : AppCompatActivity() {
     }
 
     private fun init(){
-        binding.domainRadioGroup.setOnCheckedChangeListener { group, checkedId ->
-            val radioButton = findViewById<RadioButton>(checkedId)
 
-
-            storeLinkData?.let {
-                viewModel.fullLinkData.postValue(
-                    it.copy(
-                        domain = radioButton.text.toString()
-                    )
-                )
-            }
-        }
-
+        binding.domainRadioGroup.setOnCheckedChangeListener(domainCheckedListener)
+        binding.domainSugRadioGroup.setOnCheckedChangeListener(domainSuggestionsCheckedListener)
         binding.subdomainRadioGroup.setOnCheckedChangeListener { group, checkedId ->
             val radioButton = findViewById<RadioButton>(checkedId)
 
             storeLinkData?.let {
                 viewModel.fullLinkData.postValue(it.copy(subdomain = radioButton.text.toString()))
             }
+
+            subDomainType = SubDomainType.REGISTERED
+        }
+
+        binding.subdomainSuggRadioGroup.setOnCheckedChangeListener { group, checkedId ->
+            val radioButton = findViewById<RadioButton>(checkedId)
+
+            storeLinkData?.let {
+                viewModel.fullLinkData.postValue(it.copy(subdomain = radioButton.text.toString()))
+
+            }
+            subDomainType = SubDomainType.SUGGESTION
+
         }
 
         binding.edtSuffix.addTextChangedListener {edt->
@@ -456,7 +495,77 @@ class GenerateLinkActivity : AppCompatActivity() {
         binding.layoutSelectThumb.setOnClickListener {
             checkPermission()
         }
+
+
     }
+
+    private val domainCheckedListener : RadioGroup.OnCheckedChangeListener = RadioGroup.OnCheckedChangeListener{ _: RadioGroup, checkedId: Int ->
+        val radioButton = findViewById<RadioButton>(checkedId)
+
+        binding.domainSugRadioGroup.setOnCheckedChangeListener(null)
+        binding.domainSugRadioGroup.clearCheck()
+        binding.domainSugRadioGroup.setOnCheckedChangeListener(domainSuggestionsCheckedListener)
+
+
+        storeLinkData?.let {
+            viewModel.fullLinkData.postValue(
+                it.copy(
+                    domain = radioButton.text.toString()
+                )
+
+
+            )
+            domainType = DomainType.REGISTERED
+        }
+    }
+
+    private val domainSuggestionsCheckedListener = RadioGroup.OnCheckedChangeListener{ _: RadioGroup, checkedId: Int ->
+        val radioButton = findViewById<RadioButton>(checkedId)
+
+        binding.domainRadioGroup.setOnCheckedChangeListener(null)
+        binding.domainRadioGroup.clearCheck()
+        binding.domainRadioGroup.setOnCheckedChangeListener(domainCheckedListener)
+
+        storeLinkData?.let {
+            viewModel.fullLinkData.postValue(
+                it.copy(
+                    domain = radioButton.text.toString()
+                )
+
+
+            )
+            domainType = DomainType.SUGGESTION
+        }
+    }
+
+    private fun domainSuggestionCheckDialog() {
+        GenericDialog.make(this)
+            .setCancelable(true)
+            .setBodyText("${storeLinkData?.domain} is a custom domain. Please create the domain first")
+            .setPositiveButton("Continue") {
+                startActivity(Intent(this, DomainCreateActivity::class.java).putExtra(Constant.CUSTOM_DOMAIN, storeLinkData?.domain))
+
+            }.setNegativeButton("Cancel") {
+                it?.hideDialog()
+            }
+            .build()
+                .showDialog()
+    }
+
+    private fun subDomainSuggestionCheckDialog() {
+        GenericDialog.make(this)
+            .setCancelable(true)
+            .setBodyText("${storeLinkData?.subdomain} is a custom Sub Domain. Please create the Sub Domain first")
+            .setPositiveButton("Continue") {
+                startActivity(Intent(this, DomainCreateActivity::class.java).putExtra(Constant.CUSTOM_DOMAIN, storeLinkData?.domain))
+
+            }.setNegativeButton("Cancel") {
+                it?.hideDialog()
+            }
+            .build()
+                .showDialog()
+    }
+
 
     private val launcher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
@@ -656,6 +765,20 @@ class GenerateLinkActivity : AppCompatActivity() {
     }
 
     private fun publishLink() {
+
+        if(domainType!=null){
+            if(domainType == DomainType.SUGGESTION){
+                domainSuggestionCheckDialog()
+                return
+            }
+        }
+
+        if(subDomainType!=null){
+            if(subDomainType == SubDomainType.SUGGESTION){
+                subDomainSuggestionCheckDialog()
+                return
+            }
+        }
 
         if(link!=null){
             viewModel.addNewLink(link!!)

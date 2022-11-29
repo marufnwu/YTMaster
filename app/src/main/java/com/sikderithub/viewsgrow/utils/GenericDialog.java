@@ -13,6 +13,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.Lifecycle;
@@ -38,12 +39,30 @@ public class GenericDialog {
     @SuppressLint("StaticFieldLeak")
     public static Context context;
     private Dialog dialog;
-    public boolean showPositiveButton = true;
-    public boolean showNegativeButton = true;
+    public boolean showPositiveButton = false;
+    public boolean showNegativeButton = false;
     private TextView txtBody;
     private boolean cancelable = false;
     private Image image;
     private IconType iconType;
+
+    public OnGenericDialogListener onGenericDialogListener;
+    public OnPositiveButtonClickListener onPositiveButtonClickListener;
+    public OnNegativeButtonClickListener onNegativeButtonClickListener;
+
+    public  interface OnGenericDialogListener {
+        void onPositiveButtonClick(GenericDialog dialog);
+        void onNegativeButtonClick(GenericDialog dialog);
+        void onToast(String message);
+    }
+
+    public  interface OnPositiveButtonClickListener {
+        void onPositiveButtonClick(GenericDialog dialog);
+    }
+
+    public  interface OnNegativeButtonClickListener {
+        void onNegativeButtonClick(GenericDialog dialog);
+    }
 
 
 
@@ -63,12 +82,9 @@ public class GenericDialog {
 
     public static  GenericDialog make(Context context){
         Log.d("GenericDialog", "make called");
-        if(genericDialog == null){
-            Log.d("GenericDialog", "new dialog object");
 
-            genericDialog = new GenericDialog(context);
-            //setLifeCycle(context);
-        }
+
+        genericDialog = new GenericDialog(context);
 
         return genericDialog;
     }
@@ -126,6 +142,22 @@ public class GenericDialog {
         return this;
     }
 
+    public GenericDialog setPositiveButton(String text, OnPositiveButtonClickListener onPositiveButtonClickListener){
+        this.positiveButtonText = text;
+        this.showPositiveButton = true;
+        this.onPositiveButtonClickListener = onPositiveButtonClickListener;
+
+        return this;
+    }
+    public GenericDialog setNegativeButton(String text, OnNegativeButtonClickListener onNegativeButtonClickListener){
+        this.negativeButtonText = text;
+        this.showNegativeButton = true;
+        this.onNegativeButtonClickListener = onNegativeButtonClickListener;
+
+        return this;
+    }
+
+
     public GenericDialog setBodyText(String bodyText) {
         this.bodyText = bodyText;
         return this;
@@ -161,13 +193,7 @@ public class GenericDialog {
         return this;
     }
 
-    public OnGenericDialogListener onGenericDialogListener;
 
-    public  interface OnGenericDialogListener {
-        void onPositiveButtonClick(GenericDialog dialog);
-        void onNegativeButtonClick(GenericDialog dialog);
-        void onToast(String message);
-    }
 
     public OnGenericDialogListener getOnGenericDialogListener() {
         return onGenericDialogListener;
@@ -251,17 +277,22 @@ public class GenericDialog {
             btnNegative.setVisibility(View.GONE);
         }
 
-        btnPositive.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        btnPositive.setOnClickListener(v -> {
+            if(onGenericDialogListener!=null){
                 onGenericDialogListener.onPositiveButtonClick(instance());
+            }
+
+            if(onPositiveButtonClickListener!=null){
+                onPositiveButtonClickListener.onPositiveButtonClick(instance());
             }
         });
 
-        btnNegative.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        btnNegative.setOnClickListener(v -> {
+            if(onGenericDialogListener!=null){
                 onGenericDialogListener.onNegativeButtonClick(instance());
+            }
+            if(onNegativeButtonClickListener!=null){
+                onNegativeButtonClickListener.onNegativeButtonClick(instance());
             }
         });
 
@@ -289,7 +320,6 @@ public class GenericDialog {
     public void showDialog(){
 
         Activity acc = (Activity) context;
-
 
         if (dialog!=null && !acc.isFinishing() && !acc.isDestroyed()){
             if(dialog.isShowing()){

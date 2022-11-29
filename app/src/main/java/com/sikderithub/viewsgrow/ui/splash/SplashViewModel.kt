@@ -1,6 +1,7 @@
 package com.sikderithub.viewsgrow.ui.splash
 
 import androidx.lifecycle.*
+import com.maruf.jdialog.JDialog
 import com.sikderithub.viewsgrow.Model.Login
 import com.sikderithub.viewsgrow.Model.Profile
 import com.sikderithub.viewsgrow.repo.YtRepo
@@ -57,5 +58,8 @@ class SplashViewModel(myApi: MyApi) : ViewModel(), LifecycleObserver {
                 _auth.postValue(ScreenState.Error(message = res.message()))
             }
         }
+
+
     }
+
 }

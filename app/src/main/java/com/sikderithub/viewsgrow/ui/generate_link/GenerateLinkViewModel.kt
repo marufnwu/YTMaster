@@ -61,7 +61,7 @@ class GenerateLinkViewModel(private val myApi: MyApi) : ViewModel() {
 
         Coroutines.main {
             _linkGenPage.postValue(ScreenState.Loading())
-            val res = ytRepo.getLinkPage()
+            val res = ytRepo.getLinkPage(link)
             if(res.isSuccessful && res.body()!=null){
 
                 val linkGenPageResponse = res.body()!!

@@ -27,7 +27,9 @@ interface MyApi {
 
 
     @GET("api/link.page.php")
-    suspend fun linkPage():Response<LinkGenPageResponse>
+    suspend fun linkPage(
+        @Query("link") link: String
+    ):Response<LinkGenPageResponse>
 
     @FormUrlEncoded
     @POST("api/domain.addsubdomain.php")
@@ -133,8 +135,7 @@ interface MyApi {
     @POST("api/plan.createDomainRef.php")
     suspend fun createDomainRef(
         @Field("channelName") channelName: String,
-        @Field("planId") planId: Int,
-    ):Response<MyResponse>
+    ):Response<GenericResponse<Transaction>>
 
 
     @GET("api/domain.getCustomDomainSuggetion.php")
@@ -186,7 +187,7 @@ interface MyApi {
                 .addInterceptor { chain ->
                     val original: Request = chain.request()
                     val requestBuilder: Request.Builder = original.newBuilder()
-                        .addHeader("apikey", BuildConfig.API_KEY)
+                        .addHeader("Apikey", BuildConfig.API_KEY)
                         .method(original.method, original.body)
                     val request: Request = requestBuilder.build()
                     chain.proceed(request)
@@ -217,8 +218,8 @@ interface MyApi {
             return if(!token.isNullOrEmpty()){
                chain.proceed(chain.request()
                     .newBuilder()
-                    .header("authorization","AccessToken $token")
-                    .header("userid","$userId")
+                    .header("Authorization","AccessToken $token")
+                    .header("Userid","$userId")
                     .build())
 
 

@@ -58,6 +58,40 @@
                 android:layout_height="wrap_content"/>
 
         </com.google.android.material.textfield.TextInputLayout>
+
+
+        <LinearLayout
+            android:layout_marginTop="@dimen/_3sdp"
+            android:layout_marginEnd="@dimen/_10sdp"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:background="@drawable/round_pripary_variant_border"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical">
+
+            <com.hbb20.CountryCodePicker
+                android:id="@+id/cppView"
+                app:ccp_autoDetectCountry="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <EditText
+                android:id="@+id/edtPhone"
+                android:background="@color/transparent"
+                android:gravity="center"
+                android:layout_gravity="center_vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:enabled="true"
+                android:hint="Phone"
+                android:inputType="phone"
+                android:singleLine="true" />
+        </LinearLayout>
+
+
+
+
+
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/city"
             android:layout_margin="@dimen/_8sdp"
@@ -87,20 +121,19 @@
                 android:layout_height="wrap_content"/>
 
         </com.google.android.material.textfield.TextInputLayout>
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/country"
-            style="@style/MyTextInputLayout"
+
+        <com.hbb20.CountryCodePicker
+            app:ccp_showPhoneCode="false"
+            app:ccp_showNameCode="false"
+            app:ccp_showFullName="true"
+            android:layout_marginEnd="@dimen/_10sdp"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:background="@drawable/round_pripary_variant_border"
+            android:id="@+id/cppCountry"
+            app:ccp_autoDetectCountry="true"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_50sdp"
-            android:hint="Country">
+            android:layout_height="wrap_content" />
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:fontFamily="@font/ubuntu_regular"
-                android:textColor="@color/colorPrimaryVariant"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
-
-        </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/chanelLink"

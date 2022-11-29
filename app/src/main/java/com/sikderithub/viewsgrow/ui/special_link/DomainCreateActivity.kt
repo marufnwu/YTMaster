@@ -1,18 +1,22 @@
 package com.sikderithub.viewsgrow.ui.special_link
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.sikderithub.viewsgrow.Model.DomainPlan
+import com.sikderithub.viewsgrow.Model.Transaction
+import com.sikderithub.viewsgrow.R
 import com.sikderithub.viewsgrow.adapter.DomainPlanListAdapter
 import com.sikderithub.viewsgrow.databinding.ActivityDomainCreateBinding
 import com.sikderithub.viewsgrow.repo.network.MyApi
-import com.sikderithub.viewsgrow.utils.LoadingDialog
-import com.sikderithub.viewsgrow.utils.MyApp
+import com.sikderithub.viewsgrow.ui.login.LoginActivity
+import com.sikderithub.viewsgrow.utils.*
 import com.sikderithub.viewsgrow.utils.MyExtensions.shortToast
-import com.sikderithub.viewsgrow.utils.ScreenState
 
 class DomainCreateActivity : AppCompatActivity() {
     val planList: MutableList<DomainPlan> = mutableListOf()
@@ -33,6 +37,12 @@ class DomainCreateActivity : AppCompatActivity() {
         adapter = DomainPlanListAdapter(this, planList)
         loadingDialog = LoadingDialog(this)
 
+        intent?.let {
+            it.getStringExtra(Constant.CUSTOM_DOMAIN)?.let {
+                binding.chName.editText?.setText(it)
+            }
+        }
+
 
 
         initViews()
@@ -52,18 +62,20 @@ class DomainCreateActivity : AppCompatActivity() {
 
         binding.btnContinue.setOnClickListener {
 
-            val selectedPlan = adapter.getSelectedItem
-            if(selectedPlan==null){
-                shortToast("Please select any plan first")
+            if(!MyApp.isLogged()){
+                CommonMethod.showLoginDialog(context = this)
                 return@setOnClickListener
             }
 
-            val chName= binding.edtChannelName.text.toString()
+            val selectedPlan = adapter.getSelectedItem
+
+
+            val chName= binding.chName.editText?.text.toString()
 
             if(chName.isNotEmpty()){
-                viewModel.requestDomain(chName, selectedPlan.id)
+                viewModel.requestDomain(chName)
             }else{
-                binding.edtChannelName.error = "Please enter your channel name"
+                binding.chName.error = "Please enter your channel name"
             }
         }
     }
@@ -93,6 +105,10 @@ class DomainCreateActivity : AppCompatActivity() {
                 when (it) {
                     is ScreenState.Success -> {
                         loadingDialog.hide()
+                        getPaymentLink(it.data)?.let {
+                            CommonMethod.openLink(it, this)
+                        }
+
                     }
                     is ScreenState.Loading -> {
                         loadingDialog.show()
@@ -105,9 +121,38 @@ class DomainCreateActivity : AppCompatActivity() {
         }
     }
 
+    private fun getPaymentLink(data: Transaction?):String? {
+        if(data==null){
+            return null
+        }
+
+        return "http://192.168.0.101/ytvideos/payment/pay.php?transactionRef=${data.reference}&type=${data.type}&gateway=${data.gateway}"
+    }
+
     private fun setPlanList(list: List<DomainPlan>) {
         planList.addAll(list)
         adapter.notifyDataSetChanged()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_domain_request, menu)
+
+        return true;
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId){
+            R.id.menuRequestList-> domainRequestList()
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
+    private fun domainRequestList() {
+        if(MyApp.isLogged()){
+            
+        }else{
+            CommonMethod.showLoginDialog(context = this)
+        }
     }
 }
 
@@ -119,4 +164,7 @@ class MyViewModelProvider(private val myApi: MyApi) : ViewModelProvider.Factory 
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }
+
+
+
 }

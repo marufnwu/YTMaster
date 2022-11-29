@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    app:cardCornerRadius="@dimen/_8sdp"
+    android:layout_margin="@dimen/_8sdp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:paddingBottom="@dimen/_10sdp"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <TextView
+            android:id="@+id/txtTitle"
+            android:gravity="center"
+            android:background="@color/headerColor"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:textSize="@dimen/_14sdp"
+            android:padding="@dimen/_8sdp"
+            android:text="Title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+        <WebView
+            android:layout_above="@+id/layoutAction"
+            android:layout_below="@+id/txtTitle"
+            android:minHeight="@dimen/_100sdp"
+            android:id="@+id/webView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        </WebView>
+        <RelativeLayout
+            android:id="@+id/layoutAction"
+            android:layout_alignParentBottom="true"
+            android:layout_margin="@dimen/_8sdp"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnDecline"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:background="@drawable/round_pripary_variant_border"
+                android:text="Decline" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnAccept"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:background="@drawable/round_background"
+                android:text="Read &amp; Accept"
+                android:textColor="@color/white" />
+        </RelativeLayout>
+    </RelativeLayout>
+
+
+
+</androidx.cardview.widget.CardView>

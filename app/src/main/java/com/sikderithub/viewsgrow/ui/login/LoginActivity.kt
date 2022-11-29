@@ -18,6 +18,7 @@ import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import com.maruf.jdialog.JDialog
 import com.sikderithub.viewsgrow.R
 import com.sikderithub.viewsgrow.databinding.ActivityLoginBinding
 import com.sikderithub.viewsgrow.repo.network.MyApi
@@ -49,7 +50,6 @@ class LoginActivity : AppCompatActivity() {
         loadingDialog = LoadingDialog(this)
         initObserver()
         FirebaseApp.initializeApp(applicationContext)
-
 
         auth = Firebase.auth
          gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -183,6 +183,7 @@ class LoginActivity : AppCompatActivity() {
         if(account!=null){
             account.idToken?.let {
                 Paper.book().write(Constant.SIGNING_ID_TOKEN, it)
+                Paper.book().write(Constant.SIGNING_EMAIl, account.email!!)
                 viewModel.login(it)
             }
 

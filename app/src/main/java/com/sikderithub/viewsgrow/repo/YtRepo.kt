@@ -13,8 +13,8 @@ class YtRepo(private val api: MyApi) {
         return api.generateUniqueRef()
     }
 
-    suspend fun getLinkPage():Response<LinkGenPageResponse>{
-        return  api.linkPage()
+    suspend fun getLinkPage(link: String):Response<LinkGenPageResponse>{
+        return  api.linkPage(link)
     }
 
     suspend fun addSubDomain(name:String):Response<GenericResponse<Subdomain>>{
@@ -63,8 +63,8 @@ class YtRepo(private val api: MyApi) {
         return api.createNewDomainPage()
     }
 
-    suspend fun requestDomain( chName:String,  planid:Int ): Response<MyResponse> {
-        return api.createDomainRef(chName, planid)
+    suspend fun requestDomain( chName:String): Response<GenericResponse<Transaction>> {
+        return api.createDomainRef(chName)
     }
     suspend fun accessTokenAuth( ): Response<Login> {
         return api.accessTokenAuth()

@@ -12,5 +12,7 @@
     <color name="colorPrimaryVariant">#1A58F6</color>
     <color name="colorPrimaryVariantTransparent">#5783F3</color>
     <color name="transparent">#00FFFFFF</color>
+    <color name="card_bg_white_smoke">#E6E9FA</color>
+    <color name="headerColor">@color/colorPrimaryVariantTransparent</color>
 
 </resources>

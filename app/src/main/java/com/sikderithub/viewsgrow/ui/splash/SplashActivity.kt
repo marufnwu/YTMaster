@@ -1,9 +1,17 @@
 package com.sikderithub.viewsgrow.ui.splash
 
+import android.app.Dialog
 import android.content.Intent
 import android.content.IntentSender
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.Log
+import android.view.Window
+import android.webkit.WebView
+import android.widget.Button
+import android.widget.LinearLayout
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -23,6 +31,7 @@ import com.sikderithub.viewsgrow.ui.main.MainActivity
 import com.sikderithub.viewsgrow.ui.userdetails.UserDetailsActivity
 import com.sikderithub.viewsgrow.utils.*
 import io.paperdb.Paper
+import kotlin.system.exitProcess
 
 
 class SplashActivity : AppCompatActivity() {
@@ -128,24 +137,68 @@ class SplashActivity : AppCompatActivity() {
 
     override fun onStart() {
         super.onStart()
-        //checkSigning()
-        //checkLogin()
-        checkUpdate()
 
-//        if(auth.currentUser==null){
-//            shortToast("null")
-//            startActivity(Intent(this, LoginActivity::class.java).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
-//            finish()
-//        }else{
-//            auth.currentUser!!.getIdToken(true).addOnCompleteListener {
-//                Log.d("IdToken", it.result.token!!)
-//                Log.d("Id", auth.currentUser!!.uid)
-//
-//                Paper.book().write(Constant.SIGNING_ID_TOKEN,  it.result.token!!)
-//                viewModel.isUserRegistered()
-//            }
-//
-//        }
+        checkPolicy()
+
+        //checkUpdate()
+    }
+
+    private fun checkPolicy() {
+        val isRead = LocalDB.getPolicyRead()
+        if(isRead){
+            checkUpdate()
+        }else{
+            shoPolicyDialog()
+        }
+    }
+
+    private fun shoPolicyDialog() {
+        val dialog = Dialog(this)
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.setCancelable(false)
+        dialog.setContentView(R.layout.layout_webview)
+
+        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        val window: Window? = dialog.window
+        window?.setLayout(
+            LinearLayout.LayoutParams.MATCH_PARENT,
+            LinearLayout.LayoutParams.WRAP_CONTENT
+        )
+
+        val title = dialog.findViewById<TextView>(R.id.txtTitle)
+        val webView = dialog.findViewById<WebView>(R.id.webView)
+
+        val btnAccept = dialog.findViewById<Button>(R.id.btnAccept)
+        val btnDecline = dialog.findViewById<Button>(R.id.btnDecline)
+
+        webView.settings.javaScriptEnabled = true
+        webView.loadUrl(getString(R.string.privacy_url))
+
+        title.setText("Privacy Policy")
+
+        btnDecline.setOnClickListener {
+            GenericDialog.make(this)
+                .setCancelable(false)
+                .setIconType(GenericDialog.IconType.WARNING)
+                .setBodyText("For using this app you must agree to our Privacy Policy.")
+                .setPositiveButton("Re-Check"){
+                    it.hideDialog()
+                }.setNegativeButton("Exit"){
+                    it.hideDialog()
+                    dialog.hide()
+
+                    finish()
+                    exitProcess(0)
+                }.build().showDialog()
+        }
+
+        btnAccept.setOnClickListener {
+            dialog.hide()
+            LocalDB.setPolicyRead(true)
+            checkUpdate()
+        }
+
+        dialog.show()
     }
 
     private fun checkLogin(){

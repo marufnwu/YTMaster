@@ -9,12 +9,11 @@ object LocalDB {
     const val TOKEN_KEY = "10001"
     const val USER_ID_KEY = "10002"
     const val PROFILE_KEY = "10003"
+    const val POLICY_KEY = "10004"
 
     fun saveAccessTokenAndUserId(token : String, userId: Int){
         Paper.book().write(TOKEN_KEY, token)
         Paper.book().write(USER_ID_KEY, userId)
-
-        Log.d("saveAccessTokenAndUserId", "$token $userId")
     }
 
     fun getAccessToken(): String? {
@@ -23,9 +22,6 @@ object LocalDB {
 
     fun getUserId(): Int?{
         val uid =  Paper.book().read<Int?>(USER_ID_KEY, null)
-
-        Log.d("userId", uid.toString())
-
         return uid
     }
 
@@ -49,6 +45,14 @@ object LocalDB {
         Paper.book().delete(USER_ID_KEY)
         Paper.book().delete(PROFILE_KEY)
         Paper.book().delete(TOKEN_KEY)
+    }
+
+    fun setPolicyRead(isRead:Boolean){
+        Paper.book().write(POLICY_KEY, isRead)
+    }
+
+    fun getPolicyRead(): Boolean {
+        return Paper.book().read<Boolean>(POLICY_KEY, false)!!
     }
 
 

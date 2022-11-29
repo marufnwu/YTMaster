@@ -25,7 +25,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <LinearLayout
-                    android:background="@color/colorPrimaryVariant"
+                    android:background="@color/headerColor"
                     android:gravity="center"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
@@ -129,7 +129,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <LinearLayout
-                    android:background="@color/colorPrimaryVariant"
+                    android:background="@color/headerColor"
                     android:gravity="center"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
@@ -207,7 +207,7 @@
 
         <androidx.cardview.widget.CardView
             android:layout_marginTop="@dimen/_10sdp"
-            app:cardBackgroundColor="#E6E9FA"
+            app:cardBackgroundColor="@color/card_bg_white_smoke"
             android:elevation="@dimen/_10sdp"
             app:cardCornerRadius="@dimen/_10sdp"
             android:layout_width="match_parent"
@@ -218,7 +218,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <LinearLayout
-                    android:background="@color/colorPrimaryVariant"
+                    android:background="@color/colorPrimaryVariantTransparent"
                     android:gravity="center"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
@@ -239,6 +239,8 @@
                     android:layout_height="wrap_content">
 
 
+
+
                     <HorizontalScrollView
                         android:layout_marginTop="@dimen/_12sdp"
                         android:layout_marginEnd="@dimen/_10sdp"
@@ -256,6 +258,7 @@
                     </HorizontalScrollView>
 
                     <LinearLayout
+                        android:orientation="vertical"
                         android:visibility="gone"
                         android:id="@+id/layoutDomainSuggestion"
                         android:background="@drawable/round_white_bg"
@@ -266,17 +269,25 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
 
-                        <ScrollView
+                        <TextView
+                            android:gravity="center"
+                            android:textColor="#F61504"
+                            android:layout_margin="@dimen/_5sdp"
+                            android:text="Be a professional content creator, create premium domain for your video link."
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+                        <HorizontalScrollView
+                            android:background="@drawable/round_white_bg"
                             android:scrollbars="none"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content">
-                            <com.google.android.material.chip.ChipGroup
-                                app:singleLine="false"
-                                android:scrollbars="horizontal"
-                                android:id="@+id/domainChipGroup"
-                                android:layout_width="match_parent"
+                            <RadioGroup
+                                android:orientation="vertical"
+                                android:id="@+id/domainSugRadioGroup"
+                                android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"/>
-                        </ScrollView>
+                        </HorizontalScrollView>
 
                     </LinearLayout>
 
@@ -349,6 +360,8 @@
                             android:layout_height="@dimen/_20sdp"/>
                     </LinearLayout>
                     <LinearLayout
+                        android:visibility="gone"
+                        android:id="@+id/layoutSubdomain"
                         android:layout_marginEnd="@dimen/_10sdp"
                         android:layout_marginStart="@dimen/_10sdp"
                         android:gravity="center"
@@ -393,6 +406,68 @@
                             android:layout_weight=".5"
                             android:layout_width="@dimen/_20sdp"
                             android:layout_height="@dimen/_20sdp"/>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:visibility="gone"
+                        android:id="@+id/layoutSubdomainSugg"
+                        android:layout_marginEnd="@dimen/_10sdp"
+                        android:layout_marginStart="@dimen/_10sdp"
+                        android:gravity="center"
+                        android:layout_marginTop="@dimen/_12sdp"
+                        android:padding="@dimen/_7sdp"
+                        android:background="@drawable/round_white_bg"
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:textColor="#F61504"
+                            android:gravity="center"
+                            android:text="You can also add custom subdomain to your link, Like this"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+
+                        <LinearLayout
+                            android:layout_marginTop="@dimen/_4sdp"
+                            android:weightSum="4"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+                            <LinearLayout
+                                android:gravity="center"
+                                android:textColor="@color/colorPrimaryVariant"
+                                android:fontFamily="@font/ubuntu_bold"
+                                android:layout_weight="3.5"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content">
+                                <FrameLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content">
+                                    <ScrollView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content">
+                                        <RadioGroup
+                                            android:orientation="vertical"
+                                            android:id="@+id/subdomainSuggRadioGroup"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"/>
+                                    </ScrollView>
+                                    <TextView
+                                        android:id="@+id/txtSubdomainSugg"
+                                        android:textColor="@color/colorPrimaryVariant"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"/>
+                                </FrameLayout>
+                            </LinearLayout>
+
+
+                            <ImageView
+                                android:id="@+id/imgAddSubdomainSugg"
+                                android:src="@drawable/plus"
+                                android:layout_weight=".5"
+                                android:layout_width="@dimen/_20sdp"
+                                android:layout_height="@dimen/_20sdp"/>
+                        </LinearLayout>
                     </LinearLayout>
 
 

@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.sikderithub.viewsgrow.Model.CreateNewDomainPage
 import com.sikderithub.viewsgrow.Model.MyResponse
+import com.sikderithub.viewsgrow.Model.Transaction
 import com.sikderithub.viewsgrow.repo.YtRepo
 import com.sikderithub.viewsgrow.repo.network.MyApi
 import com.sikderithub.viewsgrow.utils.Coroutines
@@ -23,10 +24,10 @@ class DomainCreateViewModel(myApi: MyApi) : ViewModel() {
     }
 
     private val _requestDomain by lazy{
-        MutableLiveData<ScreenState<MyResponse>>()
+        MutableLiveData<ScreenState<Transaction>>()
     }
 
-    val requestDomain: LiveData<ScreenState<MyResponse>>
+    val requestDomain: LiveData<ScreenState<Transaction>>
         get() = _requestDomain
 
     val getDomainPage : LiveData<ScreenState<CreateNewDomainPage>>
@@ -50,13 +51,20 @@ class DomainCreateViewModel(myApi: MyApi) : ViewModel() {
         }
     }
 
-    fun requestDomain(chName: String, planId:Int){
+    fun requestDomain(chName: String){
         Coroutines.main {
             _requestDomain.postValue(ScreenState.Loading())
-            val res = ytRepo.requestDomain(chName,planId)
+            val res = ytRepo.requestDomain(chName)
 
             if(res.isSuccessful && res.body()!=null){
-                _requestDomain.postValue(ScreenState.Success(data = res.body()))
+
+                if(!res.body()!!.error){
+                    _requestDomain.postValue(ScreenState.Success(data = res.body()!!.data))
+
+                }else{
+                    _requestDomain.postValue(ScreenState.Error(message = res.body()!!.msg))
+                }
+
             }else{
                 _requestDomain.postValue(ScreenState.Error(message = res.message()))
             }

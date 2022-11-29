@@ -54,7 +54,7 @@
 
 
     <style name="MyTextInputLayout" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
-        <item name="backgroundTint">@color/colorPrimaryVariant</item>
+        <item name="backgroundColor">@color/colorPrimaryVariant</item>
         <item name="hintTextColor">@color/colorPrimaryVariant</item>
         <item name="boxStrokeColor">@color/text_input_border</item>
         <item name="hintTextAppearance">@style/TextInputLayoutHintStyle</item>
