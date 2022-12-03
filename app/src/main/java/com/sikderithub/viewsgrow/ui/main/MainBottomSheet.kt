@@ -57,7 +57,11 @@ class MainBottomSheet : BottomSheetDialogFragment() {
         val btnLogin = dialog.findViewById<Button>(R.id.btnLogin)
 
         val privacyPolicy = dialog.findViewById<LinearLayout>(R.id.layoutPrivacyPolicy)
+        val returnPolicy = dialog.findViewById<LinearLayout>(R.id.layoutReturnPolicy)
         val allLink = dialog.findViewById<LinearLayout>(R.id.layoutAllLink)
+        val layoutContact = dialog.findViewById<LinearLayout>(R.id.layoutContact)
+        val layoutShipping = dialog.findViewById<LinearLayout>(R.id.layoutShipping)
+        val layoutTerms = dialog.findViewById<LinearLayout>(R.id.layoutTerms)
 
         dialog.setOnShowListener { myDialog->
             if(MyApp.isLogged()){
@@ -90,8 +94,19 @@ class MainBottomSheet : BottomSheetDialogFragment() {
             CommonMethod.openPrivacyPolicy(requireContext())
         }
 
-        privacyPolicy.setOnClickListener {
-            CommonMethod.openPrivacyPolicy(requireContext())
+        returnPolicy.setOnClickListener {
+            CommonMethod.openReturnPolicy(requireContext())
+        }
+        layoutContact.setOnClickListener {
+            CommonMethod.openWebView(requireContext(), resources.getString(R.string.contact_us_url), resources.getString(R.string.contact_title))
+        }
+
+        layoutTerms.setOnClickListener {
+            CommonMethod.openWebView(requireContext(), resources.getString(R.string.terms_service_url), resources.getString(R.string.terms_title))
+        }
+
+         layoutShipping.setOnClickListener {
+            CommonMethod.openWebView(requireContext(), resources.getString(R.string.shipping_url), resources.getString(R.string.shipping_title))
         }
 
         allLink.setOnClickListener {

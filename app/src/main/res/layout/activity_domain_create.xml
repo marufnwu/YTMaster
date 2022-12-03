@@ -24,7 +24,6 @@
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_gravity="center"
                 android:gravity="center"
-                app:hintTextColor="@color/colorPrimaryVariant"
                 android:id="@+id/chName"
                 style="@style/MyTextInputLayout"
                 android:layout_width="match_parent"

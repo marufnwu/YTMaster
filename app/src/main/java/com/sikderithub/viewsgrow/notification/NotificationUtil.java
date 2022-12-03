@@ -61,8 +61,12 @@ public class NotificationUtil {
             Intent notificationIntent = new Intent(Intent.ACTION_VIEW);
             notificationIntent.setData(Uri.parse(notificationData.actionUrl));
 
-            resultPendingIntent = PendingIntent.getActivity(context, 0, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
+            if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.S){
+                resultPendingIntent = PendingIntent.getActivity(context, 0, notificationIntent, PendingIntent.FLAG_MUTABLE);
+            }else{
+                resultPendingIntent = PendingIntent.getActivity(context, 0, notificationIntent, PendingIntent.FLAG_ONE_SHOT);
+            }
         }else if (notificationData.action==2) {
             //open activity
             Log.d("intentSelect", "Activity");
@@ -83,8 +87,14 @@ public class NotificationUtil {
             TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
             stackBuilder.addNextIntentWithParentStack(resultIntent);
             // Get the PendingIntent containing the entire back stack
-             resultPendingIntent =
-                    stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
+            if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.S){
+                resultPendingIntent =
+                        stackBuilder.getPendingIntent(0, PendingIntent.FLAG_IMMUTABLE);
+            }else {
+                resultPendingIntent =
+                        stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
+            }
+
         }else {
             Log.d("intentSelect", "Splash Activity");
 
@@ -93,8 +103,13 @@ public class NotificationUtil {
             TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
             stackBuilder.addNextIntentWithParentStack(resultIntent);
             // Get the PendingIntent containing the entire back stack
-            resultPendingIntent =
-                    stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
+            if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.S){
+                resultPendingIntent =
+                        stackBuilder.getPendingIntent(0, PendingIntent.FLAG_IMMUTABLE);
+            }else {
+                resultPendingIntent =
+                        stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
+            }
         }
 
 
@@ -207,11 +222,8 @@ public class NotificationUtil {
 
     private int getNotificationIcon(NotificationCompat.Builder notificationBuilder) {
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            //notificationBuilder.setColor(context.getResources().getColor(R.color.OrangeRed));
-            return R.mipmap.ic_launcher;
-
-        }
+        //notificationBuilder.setColor(context.getResources().getColor(R.color.OrangeRed));
         return R.mipmap.ic_launcher;
+
     }
 }

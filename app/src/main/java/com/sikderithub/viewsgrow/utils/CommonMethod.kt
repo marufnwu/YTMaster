@@ -283,6 +283,21 @@ object CommonMethod {
         context.startActivity(intent)
     }
 
+    fun openReturnPolicy(context: Context){
+        val intent = Intent(context, GenericWebViewActivity::class.java)
+        intent.putExtra(Constant.ACTIVITY_NAME, context.resources.getString(R.string.return_title))
+        intent.putExtra(Constant.WEB_URL, context.resources.getString(R.string.return_policy_url))
+
+        context.startActivity(intent)
+    }
+    fun openWebView(context: Context, link: String, title:String){
+        val intent = Intent(context, GenericWebViewActivity::class.java)
+        intent.putExtra(Constant.ACTIVITY_NAME, title)
+        intent.putExtra(Constant.WEB_URL, link)
+
+        context.startActivity(intent)
+    }
+
     fun openAllLinkActivity(context: Context){
         val intent = Intent(context, AllLinkActivity::class.java)
 
@@ -295,6 +310,7 @@ object CommonMethod {
             .setBodyText(bodyText)
             .setIconType(GenericDialog.IconType.WARNING)
             .setPositiveButton("Login Now") {
+                it?.hideDialog()
                 context.startActivity(Intent(context, LoginActivity::class.java))
             }.setNegativeButton("Cancel") {
                 it?.hideDialog()

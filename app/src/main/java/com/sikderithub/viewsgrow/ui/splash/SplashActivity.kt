@@ -1,14 +1,18 @@
 package com.sikderithub.viewsgrow.ui.splash
 
+import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.Intent
 import android.content.IntentSender
+import android.graphics.Bitmap
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.net.http.SslError
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.view.Window
-import android.webkit.WebView
+import android.webkit.*
 import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -152,6 +156,7 @@ class SplashActivity : AppCompatActivity() {
         }
     }
 
+    @SuppressLint("SetJavaScriptEnabled")
     private fun shoPolicyDialog() {
         val dialog = Dialog(this)
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -172,6 +177,7 @@ class SplashActivity : AppCompatActivity() {
         val btnDecline = dialog.findViewById<Button>(R.id.btnDecline)
 
         webView.settings.javaScriptEnabled = true
+        webView.webViewClient = MyWebViewClient()
         webView.loadUrl(getString(R.string.privacy_url))
 
         title.setText("Privacy Policy")
@@ -257,6 +263,12 @@ class SplashActivity : AppCompatActivity() {
             finish()
         }
     }
+
+    class MyWebViewClient : WebViewClient() {
+        
+    }
+
+
 
 }
 

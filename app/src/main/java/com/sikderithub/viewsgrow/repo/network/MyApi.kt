@@ -108,7 +108,7 @@ interface MyApi {
     @GET("api/chanelinfo.php")
     suspend fun chanelinfo(
         @Query("channel") channel: String,
-    ):Response<ChanelInfo>
+    ):Response<GenericResponse<ChanelInfo>>
 
 
     @GET("api/user.highLighted.php")
@@ -142,6 +142,9 @@ interface MyApi {
     suspend fun getCustomDomainSuggetions(
         @Query("videoId") videoId:String
     ):Response<GenericResponse<List<String>>>
+
+
+
 
 
 

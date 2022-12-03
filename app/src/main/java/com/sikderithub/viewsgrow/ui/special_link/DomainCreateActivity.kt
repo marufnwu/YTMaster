@@ -8,6 +8,7 @@ import android.view.MenuItem
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.sikderithub.viewsgrow.BuildConfig
 import com.sikderithub.viewsgrow.Model.DomainPlan
 import com.sikderithub.viewsgrow.Model.Transaction
 import com.sikderithub.viewsgrow.R
@@ -74,6 +75,9 @@ class DomainCreateActivity : AppCompatActivity() {
 
             if(chName.isNotEmpty()){
                 viewModel.requestDomain(chName)
+                //PlayPayment(this)
+                  //  .lunch()
+
             }else{
                 binding.chName.error = "Please enter your channel name"
             }
@@ -126,7 +130,7 @@ class DomainCreateActivity : AppCompatActivity() {
             return null
         }
 
-        return "http://192.168.0.101/ytvideos/payment/pay.php?transactionRef=${data.reference}&type=${data.type}&gateway=${data.gateway}"
+        return BuildConfig.BASE_URL+"payment/pay.php?gatewayOrderId=${data.orderId}&transactionRef=${data.reference}&type=${data.type}&gateway=${data.gateway}"
     }
 
     private fun setPlanList(list: List<DomainPlan>) {

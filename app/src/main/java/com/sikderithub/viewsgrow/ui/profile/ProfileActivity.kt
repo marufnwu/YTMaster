@@ -52,11 +52,13 @@ class ProfileActivity : AppCompatActivity() {
                 when(it){
                     is ScreenState.Success->{
 
-                        binding.layoutChanelInfo.visibility  =View.VISIBLE
 
                         val chanelInfo = it.data
                         chanelInfo?.let {
+
                             if(it.items!=null && it.items!!.size>0){
+                                binding.layoutChanelInfo.visibility  =View.VISIBLE
+
                                 val item = it.items!![0]!!
                                 item.brandingSettings?.let {
                                     it.image?.let {

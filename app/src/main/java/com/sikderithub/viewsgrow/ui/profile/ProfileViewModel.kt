@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.sikderithub.viewsgrow.Model.GenericResponse
 import com.sikderithub.viewsgrow.Model.Link
 import com.sikderithub.viewsgrow.Model.Paging
 import com.sikderithub.viewsgrow.Model.Youtube.ChanelInfo
@@ -30,10 +31,18 @@ class ProfileViewModel(private val myApi: MyApi) : ViewModel() {
     fun getChanelInfo(channel:String){
         channelInfo.postValue(ScreenState.Loading())
         Coroutines.main {
-            val res = myApi.chanelinfo(channel)
-            if(res.isSuccessful && res.body()!=null){
-                channelInfo.postValue(ScreenState.Success(res.body()!!))
-            }else{
+            try {
+                val res = myApi.chanelinfo(channel)
+                if(res.isSuccessful && res.body()!=null){
+                    if(!res.body()!!.error){
+                        channelInfo.postValue(ScreenState.Success(res.body()!!.data))
+                    }else{
+                        channelInfo.postValue(ScreenState.Error(null, "Channel info not found"))
+                    }
+                }else{
+                    channelInfo.postValue(ScreenState.Error(null, "No Information found"))
+                }
+            }catch (e:Exception){
                 channelInfo.postValue(ScreenState.Error(null, "No Information found"))
             }
         }

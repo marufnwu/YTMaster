@@ -5,17 +5,18 @@ import android.graphics.Bitmap
 import android.net.http.SslError
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
-import android.webkit.SslErrorHandler
-import android.webkit.WebChromeClient
-import android.webkit.WebView
-import android.webkit.WebViewClient
+import android.webkit.*
 import com.sikderithub.viewsgrow.databinding.ActivityGenericWebviewBinding
 import com.sikderithub.viewsgrow.utils.BaseActivity
 import com.sikderithub.viewsgrow.utils.Constant
+import com.sikderithub.viewsgrow.utils.LoadingDialog
+import com.sikderithub.viewsgrow.utils.MyExtensions.shortToast
 
 class GenericWebViewActivity : BaseActivity() {
     lateinit var binding: ActivityGenericWebviewBinding
+    lateinit var loadingDialog: LoadingDialog
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityGenericWebviewBinding.inflate(layoutInflater)
@@ -44,6 +45,8 @@ class GenericWebViewActivity : BaseActivity() {
 
     @SuppressLint("SetJavaScriptEnabled")
     private fun initViews() {
+        loadingDialog = LoadingDialog(this)
+
         val webview = binding.webView
         webview.webChromeClient = MyChromeWebClient()
         webview.webViewClient = MyWebCViewClient()
@@ -54,6 +57,7 @@ class GenericWebViewActivity : BaseActivity() {
         override fun onReceivedTouchIconUrl(view: WebView?, url: String?, precomposed: Boolean) {
             super.onReceivedTouchIconUrl(view, url, precomposed)
         }
+
     }
 
     inner class MyWebCViewClient : WebViewClient(){
@@ -62,15 +66,15 @@ class GenericWebViewActivity : BaseActivity() {
             super.onPageFinished(view, url)
         }
 
+        override fun onReceivedError(view: WebView?, request: WebResourceRequest?, error: WebResourceError?) {
+        }
+
         override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
             binding.progress.visibility = View.VISIBLE
             super.onPageStarted(view, url, favicon)
         }
 
-        override fun onReceivedSslError(
-            view: WebView?, handler: SslErrorHandler?, error: SslError?) {
-            super.onReceivedSslError(view, handler, error)
-        }
+
 
     }
 }
