@@ -18,16 +18,20 @@ class LoginViewModel(val myApi: MyApi) : ViewModel() {
     fun login(gToken: String){
         _loginRes.postValue(ScreenState.Loading())
         Coroutines.main {
-            val res = ytRepo.login(gToken)
-            if(res.isSuccessful && res.body()!=null){
-                val r = res.body()!!
-                if(!r.error){
-                    _loginRes.postValue(ScreenState.Success(data = r))
+            try {
+                val res = ytRepo.login(gToken)
+                if(res.isSuccessful && res.body()!=null){
+                    val r = res.body()!!
+                    if(!r.error){
+                        _loginRes.postValue(ScreenState.Success(data = r))
+                    }else{
+                        _loginRes.postValue(ScreenState.Error(data = null, r.msg))
+                    }
                 }else{
-                    _loginRes.postValue(ScreenState.Error(data = null, r.msg))
+                    _loginRes.postValue(ScreenState.Error(data = null, res.message()))
                 }
-            }else{
-                _loginRes.postValue(ScreenState.Error(data = null, res.message()))
+            }catch (e:Exception){
+                _loginRes.postValue(ScreenState.Error(data = null, "Something went wrong"))
             }
         }
     }

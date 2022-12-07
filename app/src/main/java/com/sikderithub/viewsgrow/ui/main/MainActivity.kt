@@ -2,6 +2,7 @@ package com.sikderithub.viewsgrow.ui.main
 
 import android.app.Activity
 import android.content.Intent
+import android.net.ConnectivityManager
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
@@ -15,6 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.maruf.jdialog.JDialog
 import com.sikderithub.viewsgrow.Model.HighLightedChannel
 import com.sikderithub.viewsgrow.Model.Link
 import com.sikderithub.viewsgrow.Model.Profile
@@ -28,11 +30,13 @@ import com.sikderithub.viewsgrow.databinding.LayoutNavBottomSheetBinding
 import com.sikderithub.viewsgrow.layout_manager.SmoothScrollingLayoutManager
 import com.sikderithub.viewsgrow.ui.all_link.AllLinkActivity
 import com.sikderithub.viewsgrow.ui.channel_list.ChannelListActivity
+import com.sikderithub.viewsgrow.ui.create_subdomain.SubdomainCreateActivity
 import com.sikderithub.viewsgrow.ui.generate_link.GenerateLinkActivity
 import com.sikderithub.viewsgrow.ui.login.LoginActivity
 import com.sikderithub.viewsgrow.ui.profile.ProfileActivity
 import com.sikderithub.viewsgrow.ui.special_link.DomainCreateActivity
 import com.sikderithub.viewsgrow.utils.*
+import com.sikderithub.viewsgrow.utils.MyExtensions.addBanner
 import com.sikderithub.viewsgrow.utils.MyExtensions.setUrl
 
 
@@ -68,9 +72,22 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         userAdapter = UserListAdapter(this, userList, ViewType.ROUND)
         channelAdapter = ChannelsAdapter(this, channelList, ChannelsAdapter.ViewType.ROUND)
 
-        initViews()
-        addObServer()
-        initClickListener()
+        if (CommonMethod.haveInternet(getSystemService(CONNECTIVITY_SERVICE) as ConnectivityManager)){
+            initViews()
+            addObServer()
+            initClickListener()
+        }else{
+            JDialog.make(this)
+                .setBodyText("No Internet connection. Please enable Mobile Data Or Wifi")
+                .setIconType(JDialog.IconType.WARNING)
+                .setPositiveButton("Retry"){
+                    it.hideDialog()
+                    startActivity(intent)
+
+                }
+                .build()
+                .showDialog()
+        }
 
     }
 
@@ -174,6 +191,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     private fun initClickListener() {
         binding.btnGen.setOnClickListener(this)
         binding.layoutCreateNewDomain.setOnClickListener(this)
+        binding.layoutCreateNewSubDomain.setOnClickListener(this)
     }
 
     private fun addObServer() {
@@ -293,6 +311,27 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                 }
             }
         }
+
+        viewModel.homePage.observe(this){
+            it?.let {
+                when(it){
+                    is ScreenState.Success ->{
+                       it.data?.let {
+                           if(!it.mainBanner.error){
+                               binding.shimmer.stopShimmer()
+                               binding.imgMainBanner.addBanner(it.mainBanner)
+                           }
+                       }
+                    }
+                    is ScreenState.Loading ->{
+
+                    } is ScreenState.Error ->{
+
+                    }
+                }
+            }
+
+        }
     }
 
     override fun onClick(v: View?) {
@@ -302,6 +341,8 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                     generateLink()
                 } R.id.layoutCreateNewDomain-> {
                     startActivity(Intent(this, DomainCreateActivity::class.java))
+                } R.id.layoutCreateNewSubDomain-> {
+                    startActivity(Intent(this, SubdomainCreateActivity::class.java))
                 }
                 else -> {}
             }

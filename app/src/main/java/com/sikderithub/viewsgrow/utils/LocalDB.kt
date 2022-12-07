@@ -14,6 +14,9 @@ object LocalDB {
     fun saveAccessTokenAndUserId(token : String, userId: Int){
         Paper.book().write(TOKEN_KEY, token)
         Paper.book().write(USER_ID_KEY, userId)
+
+        MyApp.updateFcmToken()
+
     }
 
     fun getAccessToken(): String? {

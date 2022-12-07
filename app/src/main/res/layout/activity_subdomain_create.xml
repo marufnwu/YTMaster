@@ -186,6 +186,7 @@
             </androidx.cardview.widget.CardView>
 
             <com.github.nikartm.button.FitButton
+                android:outlineSpotShadowColor="@color/colorPrimaryVariant"
                 android:paddingEnd="@dimen/_20sdp"
                 android:paddingStart="@dimen/_20sdp"
                 app:fb_shadow="@dimen/_20sdp"

@@ -3,10 +3,7 @@ package com.sikderithub.viewsgrow.ui.main
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.sikderithub.viewsgrow.Model.HighLightedChannel
-import com.sikderithub.viewsgrow.Model.Link
-import com.sikderithub.viewsgrow.Model.Paging
-import com.sikderithub.viewsgrow.Model.Profile
+import com.sikderithub.viewsgrow.Model.*
 import com.sikderithub.viewsgrow.repo.YtRepo
 import com.sikderithub.viewsgrow.repo.network.MyApi
 import com.sikderithub.viewsgrow.utils.Coroutines
@@ -19,6 +16,7 @@ class MainActivityViewModel(private val  myApi: MyApi) : ViewModel() {
     private val _isUserRegistered : MutableLiveData<ScreenState<Boolean>> = MutableLiveData()
 
     val thumbLinks : MutableLiveData<ScreenState<Paging<Link>>> = MutableLiveData()
+    val homePage : MutableLiveData<ScreenState<HomePage>> = MutableLiveData()
 
     val userList = MutableLiveData<ScreenState<MutableList<Profile>>>()
     val highLightedChannels = MutableLiveData<ScreenState<Paging<HighLightedChannel>>>()
@@ -28,6 +26,7 @@ class MainActivityViewModel(private val  myApi: MyApi) : ViewModel() {
         get() = _recentLinks
 
     init {
+        homeData()
         getHighLightedChannel()
         //getRecentLinks()
         //getUsers()
@@ -112,6 +111,23 @@ class MainActivityViewModel(private val  myApi: MyApi) : ViewModel() {
 
     fun isUserRegistered(email:String){
 
+    }
+
+    fun homeData(){
+        Coroutines.main {
+            homePage.postValue(ScreenState.Loading())
+            val res = ytRepo.getHomePage()
+            if(res.isSuccessful && res.body()!=null){
+                val result = res.body()!!
+                if(!result.error){
+                    homePage.postValue(ScreenState.Success(data = result.data))
+                }else{
+                    homePage.postValue(ScreenState.Error(message = result.msg))
+                }
+            }else{
+                homePage.postValue(ScreenState.Loading())
+            }
+        }
     }
 
 

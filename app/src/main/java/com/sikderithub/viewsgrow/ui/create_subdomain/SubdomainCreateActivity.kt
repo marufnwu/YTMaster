@@ -1,9 +1,7 @@
-package com.sikderithub.viewsgrow.ui.special_link
+package com.sikderithub.viewsgrow.ui.create_subdomain
 
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import androidx.lifecycle.ViewModel
@@ -15,25 +13,23 @@ import com.sikderithub.viewsgrow.Model.DomainPlan
 import com.sikderithub.viewsgrow.Model.Transaction
 import com.sikderithub.viewsgrow.R
 import com.sikderithub.viewsgrow.adapter.DomainPlanListAdapter
-import com.sikderithub.viewsgrow.databinding.ActivityDomainCreateBinding
+import com.sikderithub.viewsgrow.databinding.ActivitySubdomainCreateBinding
 import com.sikderithub.viewsgrow.repo.network.MyApi
-import com.sikderithub.viewsgrow.ui.login.LoginActivity
+import com.sikderithub.viewsgrow.ui.special_link.DomainCreateViewModel
 import com.sikderithub.viewsgrow.utils.*
-import com.sikderithub.viewsgrow.utils.MyExtensions.shortToast
 
-class DomainCreateActivity : AppCompatActivity() {
+class SubdomainCreateActivity : AppCompatActivity() {
     val planList: MutableList<DomainPlan> = mutableListOf()
-    private lateinit var binding : ActivityDomainCreateBinding
+    private lateinit var binding : ActivitySubdomainCreateBinding
     lateinit var loadingDialog: LoadingDialog
-    lateinit var adapter:  DomainPlanListAdapter
-
-
+    lateinit var adapter: DomainPlanListAdapter
     val viewModel : DomainCreateViewModel by lazy { ViewModelProvider(this, MyViewModelProvider((application as MyApp).myApi))[DomainCreateViewModel::class.java] }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityDomainCreateBinding.inflate(layoutInflater)
+        binding = ActivitySubdomainCreateBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setHomeButtonEnabled(true)
@@ -41,7 +37,7 @@ class DomainCreateActivity : AppCompatActivity() {
         loadingDialog = LoadingDialog(this)
 
         intent?.let {
-            it.getStringExtra(Constant.CUSTOM_DOMAIN)?.let {
+            it.getStringExtra(Constant.CUSTOM_SUB_DOMAIN)?.let {
                 binding.chName.editText?.setText(it)
             }
         }
@@ -52,8 +48,7 @@ class DomainCreateActivity : AppCompatActivity() {
 
         addObserver()
 
-        viewModel.getPage()
-
+        viewModel.getSubDomainPage()
     }
 
     private fun initViews() {
@@ -76,9 +71,9 @@ class DomainCreateActivity : AppCompatActivity() {
             val chName= binding.chName.editText?.text.toString()
 
             if(chName.isNotEmpty()){
-                viewModel.requestDomain(chName)
+                viewModel.requestSubDomain(chName)
                 //PlayPayment(this)
-                  //  .lunch()
+                //  .lunch()
 
             }else{
                 binding.chName.error = "Please enter your channel name"
@@ -87,7 +82,7 @@ class DomainCreateActivity : AppCompatActivity() {
     }
 
     private fun addObserver() {
-        viewModel.getDomainPage
+        viewModel.getSubDomainPage
             .observe(this) {
                 it?.let {
                     when (it) {
@@ -111,7 +106,7 @@ class DomainCreateActivity : AppCompatActivity() {
                 }
             }
 
-        viewModel.requestDomain.observe(this){
+        viewModel.requestSubDomain.observe(this){
             it?.let {
                 when (it) {
                     is ScreenState.Success -> {
@@ -140,6 +135,13 @@ class DomainCreateActivity : AppCompatActivity() {
         }
     }
 
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId){
+            android.R.id.home -> onBackPressed()
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
     private fun getPaymentLink(data: Transaction?):String? {
         if(data==null){
             return null
@@ -163,38 +165,16 @@ class DomainCreateActivity : AppCompatActivity() {
         }
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.menu_domain_request, menu)
-
-        return true;
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when(item.itemId){
-            R.id.menuRequestList-> domainRequestList()
-            android.R.id.home -> onBackPressed()
+    class MyViewModelProvider(private val myApi: MyApi) : ViewModelProvider.Factory {
+        override fun <T : ViewModel> create(modelClass: Class<T>): T {
+            if (modelClass.isAssignableFrom(DomainCreateViewModel::class.java)) {
+                @Suppress("UNCHECKED_CAST")
+                return DomainCreateViewModel(myApi) as T
+            }
+            throw IllegalArgumentException("Unknown ViewModel class")
         }
-        return super.onOptionsItemSelected(item)
+
+
+
     }
-
-    private fun domainRequestList() {
-        if(MyApp.isLogged()){
-            
-        }else{
-            CommonMethod.showLoginDialog(context = this)
-        }
-    }
-}
-
-class MyViewModelProvider(private val myApi: MyApi) : ViewModelProvider.Factory {
-    override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(DomainCreateViewModel::class.java)) {
-            @Suppress("UNCHECKED_CAST")
-            return DomainCreateViewModel(myApi) as T
-        }
-        throw IllegalArgumentException("Unknown ViewModel class")
-    }
-
-
-
 }

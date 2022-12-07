@@ -4,7 +4,10 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.res.Resources
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
 import android.net.Uri
+import android.os.Build
 import androidx.core.content.ContextCompat.startActivity
 import com.sikderithub.viewsgrow.Model.Login
 import com.sikderithub.viewsgrow.Model.Profile
@@ -118,14 +121,28 @@ object CommonMethod {
 
     fun isYoutubeChanelLinkValid(link :String):String?{
         val chRegex = "[https?://?(www.)]+?youtube.com/(channel|c|user)+?/([\\w-]+)?+"
+        val chRegex1 = "[https?:/?(www.)]+?youtube.com/([@]?)?([a-zA-z-]+)"
         val pattern: Pattern = Pattern.compile(
             chRegex ,
             Pattern.CASE_INSENSITIVE
         )
 
         val matcher: Matcher = pattern.matcher(link)
+
+
+        val pattern1: Pattern = Pattern.compile(
+            chRegex1 ,
+            Pattern.CASE_INSENSITIVE
+        )
+
+        val matcher1: Matcher = pattern1.matcher(link)
+
+
         return if (matcher.matches()){
-            return matcher.group(1)+"/"+matcher.group(2)
+            matcher.group(1)+"/"+matcher.group(2)
+
+        }else if (matcher1.matches()){
+            matcher1.group(1)+"/"+matcher1.group(2)
         }else{
             null
         }
@@ -173,6 +190,7 @@ object CommonMethod {
         val linkHost = Uri.parse(link).host
         val uri = Uri.parse(link)
         if (linkHost == null) {
+            context.shortToast("null")
             return
         }
 
@@ -183,7 +201,7 @@ object CommonMethod {
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                 intent.setPackage("com.google.android.youtube")
                 context.startActivity(intent)
-            }else if (link != null && (link.startsWith("http://") || link.startsWith("https://"))) {
+            }else if (link.startsWith("http://") || link.startsWith("https://")) {
                 val intent = Intent(Intent.ACTION_VIEW, Uri.parse(link))
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                 context.startActivity(intent)
@@ -318,6 +336,26 @@ object CommonMethod {
             .build()
             .showDialog()
     }
+
+    fun haveInternet(connectivityManager: ConnectivityManager?): Boolean {
+        return when {
+            connectivityManager==null -> {
+                false
+            }
+            Build.VERSION.SDK_INT >= 23 -> {
+                val network = connectivityManager.activeNetwork
+                val capabilities = connectivityManager.getNetworkCapabilities(network) ?: return false
+                capabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) || capabilities.hasTransport(
+                    NetworkCapabilities.TRANSPORT_WIFI
+                )
+            }
+            else -> {
+                (connectivityManager.activeNetworkInfo != null && connectivityManager.activeNetworkInfo!!.isAvailable
+                        && connectivityManager.activeNetworkInfo!!.isConnected)
+            }
+        }
+    }
+
 
 }
 

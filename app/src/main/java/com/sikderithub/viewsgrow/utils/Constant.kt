@@ -2,6 +2,7 @@ package com.sikderithub.viewsgrow.utils
 
 object Constant {
 
+    const val CUSTOM_SUB_DOMAIN: String = "CUSTOM_SUBDOMAIN_KEY"
     const val CUSTOM_DOMAIN: String = "CUSTOM_DOMAIN_KEY"
     const val ACTIVITY: String = "NotificationActivity"
     const val ACTIVITY_CREATED_BY_NOTI: String = "ACTIVITY_CREATED_BY_NOTI"

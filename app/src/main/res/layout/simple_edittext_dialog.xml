@@ -44,7 +44,7 @@
                    android:id="@+id/edtSubdomain"
                    style="@style/MyTextInputLayout"
                    android:layout_width="match_parent"
-                   android:layout_height="@dimen/_50sdp"
+                   android:layout_height="wrap_content"
                    android:hint="Enter Subdomain">
 
                    <com.google.android.material.textfield.TextInputEditText
@@ -52,7 +52,6 @@
                        android:scrollHorizontally="true"
                        android:inputType="text"
                        android:id="@+id/subdomainTxtInput"
-                       android:digits="0123456789qwertzuiopasdfghjklyxcvbnm"
                        android:gravity="center"
                        android:fontFamily="@font/ubuntu_regular"
                        android:textColor="@color/colorPrimaryVariant"
@@ -94,7 +93,7 @@
                    <com.github.nikartm.button.FitButton
                        app:fb_fontFamilyRes="@font/ubuntu_bold"
                        android:id="@+id/btnSubmit"
-                       android:layout_width="wrap_content"
+                       android:layout_width="@dimen/_100sdp"
                        android:layout_height="wrap_content"
                        android:enabled="true"
                        android:gravity="center"
@@ -104,8 +103,6 @@
                        app:fb_text="Add"
                        android:paddingBottom="@dimen/_10sdp"
                        android:paddingTop="@dimen/_10sdp"
-                       android:paddingStart="@dimen/_25sdp"
-                       android:paddingEnd="@dimen/_25sdp"
                        app:fb_backgroundColor="@color/colorPrimaryVariant"/>
 
                </LinearLayout>

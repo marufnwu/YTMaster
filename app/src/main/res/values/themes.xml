@@ -62,7 +62,6 @@
         <item name="boxCornerRadiusBottomEnd">@dimen/_20sdp</item>
         <item name="boxCornerRadiusTopStart">@dimen/_20sdp</item>
         <item name="boxCornerRadiusTopEnd">@dimen/_20sdp</item>
-        <item name="height">@dimen/_10sdp</item>
         <item name="background">@color/design_default_color_primary_variant</item>
         <item name="android:layout_marginTop">@dimen/_3sdp</item>
         <item name="android:layout_marginStart">@dimen/_10sdp</item>

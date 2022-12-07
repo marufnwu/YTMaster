@@ -194,6 +194,7 @@
                                     android:layout_height="wrap_content"/>
 
                                 <androidx.appcompat.widget.AppCompatButton
+                                    android:id="@+id/btnAddChannel"
                                     android:textColor="@color/colorPrimaryVariant"
                                     android:text="Add Channel"
                                     android:background="@drawable/round_pripary_variant_border"
@@ -288,7 +289,19 @@
         </LinearLayout>
 
 
-
+        <com.github.nikartm.button.FitButton
+            android:id="@+id/btnLogout"
+            android:layout_marginTop="@dimen/_10sdp"
+            app:fb_cornerRadius="@dimen/_10sdp"
+            android:gravity="center"
+            android:layout_gravity="center"
+            app:fb_textSize="@dimen/_14sdp"
+            app:fb_textColor="@color/white"
+            android:padding="@dimen/_10sdp"
+            app:fb_backgroundColor="@color/OrangeRed"
+            app:fb_text="Logout"
+            android:layout_width="@dimen/_180sdp"
+            android:layout_height="wrap_content"/>
 
     </LinearLayout>
 

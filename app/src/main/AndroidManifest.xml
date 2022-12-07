@@ -5,7 +5,9 @@
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name=" com.google.android.gms.permission.AD_ID" tools:node="remove" />
+    <uses-permission
+        android:name=" com.google.android.gms.permission.AD_ID"
+        tools:node="remove" />
 
     <application
         android:name="com.sikderithub.viewsgrow.utils.MyApp"
@@ -19,6 +21,11 @@
         android:theme="@style/Theme.YTMaster"
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
+        <activity
+            android:label="Create Sub Domain"
+            android:theme="@style/Theme.YTMaster.ActionBar"
+            android:name=".ui.create_subdomain.SubdomainCreateActivity"
+            android:exported="false" />
         <activity
             android:name=".ui.webview.GenericWebViewActivity"
             android:exported="false"

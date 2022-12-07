@@ -60,33 +60,37 @@ class GenerateLinkViewModel(private val myApi: MyApi) : ViewModel() {
 
 
         Coroutines.main {
-            _linkGenPage.postValue(ScreenState.Loading())
-            val res = ytRepo.getLinkPage(link)
-            if(res.isSuccessful && res.body()!=null){
+            try {
+                _linkGenPage.postValue(ScreenState.Loading())
+                val res = ytRepo.getLinkPage(link)
+                if(res.isSuccessful && res.body()!=null){
 
-                val linkGenPageResponse = res.body()!!
-                if(!linkGenPageResponse.error){
+                    val linkGenPageResponse = res.body()!!
+                    if(!linkGenPageResponse.error){
 
-                    _linkGenPage.postValue(ScreenState.Success(linkGenPageResponse.data))
-                    setSuffix(linkGenPageResponse.data.uniqueRef)
+                        _linkGenPage.postValue(ScreenState.Success(linkGenPageResponse.data))
+                        setSuffix(linkGenPageResponse.data.uniqueRef)
 
 
-                    val fullLink = NewFullLink(
-                        domain = linkGenPageResponse.data.domains.takeWhile { it.main==1 }[0].name,
-                        subdomain = null,
-                        suffix = linkGenPageResponse.data.uniqueRef.ref,
-                        type = CommonMethod.getLinkPlatform(link)
-                    )
+                        val fullLink = NewFullLink(
+                            domain = linkGenPageResponse.data.domains.takeWhile { it.main==1 }[0].name,
+                            subdomain = null,
+                            suffix = linkGenPageResponse.data.uniqueRef.ref,
+                            type = CommonMethod.getLinkPlatform(link)
+                        )
 
-                    fullLinkData.postValue(fullLink)
+                        fullLinkData.postValue(fullLink)
+
+                    }else{
+                        _linkGenPage.postValue(ScreenState.Error(linkGenPageResponse.data, linkGenPageResponse.msg))
+                    }
+
 
                 }else{
-                    _linkGenPage.postValue(ScreenState.Error(linkGenPageResponse.data, linkGenPageResponse.msg))
+                    _linkGenPage.postValue(ScreenState.Error(null, res.message()))
                 }
-
-
-            }else{
-                _linkGenPage.postValue(ScreenState.Error(null, res.message()))
+            }catch (e : Exception){
+                _linkGenPage.postValue(ScreenState.Error(null, e.message!!))
             }
         }
     }
@@ -177,7 +181,7 @@ class GenerateLinkViewModel(private val myApi: MyApi) : ViewModel() {
                     publishLinkRes.postValue(ScreenState.Error(message = "Something went wrong"))
                 }
             }catch (e:Exception){
-                MyException.showDialog(e.message)
+                publishLinkRes.postValue(ScreenState.Error(message = "Something went wrong"))
             }
         }
     }

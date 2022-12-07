@@ -62,16 +62,26 @@ class YtRepo(private val api: MyApi) {
     suspend fun getCreateNewDomainPage(): Response<GenericResponse<CreateNewDomainPage>> {
         return api.createNewDomainPage()
     }
+    suspend fun getCreateNewSubDomainPage(): Response<GenericResponse<CreateNewDomainPage>> {
+        return api.createNewSubDomainPage()
+    }
 
     suspend fun requestDomain( chName:String): Response<GenericResponse<Transaction>> {
         return api.createDomainRef(chName)
     }
-    suspend fun accessTokenAuth( ): Response<Login> {
+    suspend fun requestSubDomain( chName:String): Response<GenericResponse<Transaction>> {
+        return api.createSubDomainRef(chName)
+    }
+    suspend fun accessTokenAuth(): Response<Login> {
         return api.accessTokenAuth()
     }
 
     suspend fun getDomainSuggetions(videoId:String): Response<GenericResponse<List<String>>> {
         return api.getCustomDomainSuggetions(videoId)
+    }
+
+    suspend fun getHomePage(): Response<GenericResponse<HomePage>> {
+        return api.homeData();
     }
 
 }

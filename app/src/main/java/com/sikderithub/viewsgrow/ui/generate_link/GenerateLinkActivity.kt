@@ -1,6 +1,7 @@
 package com.sikderithub.viewsgrow.ui.generate_link
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.Dialog
 import android.content.ClipData
@@ -34,6 +35,7 @@ import com.sikderithub.viewsgrow.Model.*
 import com.sikderithub.viewsgrow.R
 import com.sikderithub.viewsgrow.databinding.ActivityGenerateLinkBinding
 import com.sikderithub.viewsgrow.repo.network.MyApi
+import com.sikderithub.viewsgrow.ui.create_subdomain.SubdomainCreateActivity
 import com.sikderithub.viewsgrow.ui.login.LoginActivity
 import com.sikderithub.viewsgrow.ui.special_link.DomainCreateActivity
 import com.sikderithub.viewsgrow.utils.*
@@ -356,12 +358,15 @@ class GenerateLinkActivity : AppCompatActivity() {
 
     }
 
+    @SuppressLint("UseCompatLoadingForDrawables")
     private fun addDomainSuggestions(domains: List<String>?) {
         domains?.let {
             if(it.isNotEmpty()){
                 it.forEach{
                     var radioButton: RadioButton?
                     radioButton = RadioButton(this)
+                    radioButton.left
+                    radioButton.setCompoundDrawables(null, null, resources.getDrawable(R.drawable.paid),null)
                     radioButton.text = it
                     binding.domainSugRadioGroup.addView(radioButton)
                 }
@@ -442,23 +447,53 @@ class GenerateLinkActivity : AppCompatActivity() {
         binding.domainRadioGroup.setOnCheckedChangeListener(domainCheckedListener)
         binding.domainSugRadioGroup.setOnCheckedChangeListener(domainSuggestionsCheckedListener)
         binding.subdomainRadioGroup.setOnCheckedChangeListener { group, checkedId ->
+
             val radioButton = findViewById<RadioButton>(checkedId)
 
-            storeLinkData?.let {
-                viewModel.fullLinkData.postValue(it.copy(subdomain = radioButton.text.toString()))
+
+            radioButton?.text?.let {
+                if (radioButton.isChecked) {
+                    storeLinkData?.let {
+                        viewModel.fullLinkData.postValue(it.copy(subdomain = radioButton.text.toString()))
+                    }
+
+                    subDomainType = SubDomainType.REGISTERED
+
+                    return@setOnCheckedChangeListener
+                }
+
             }
 
-            subDomainType = SubDomainType.REGISTERED
+
+
+            subDomainType = null
+            storeLinkData?.let {
+                viewModel.fullLinkData.postValue(it.copy(subdomain = null))
+            }
         }
 
         binding.subdomainSuggRadioGroup.setOnCheckedChangeListener { group, checkedId ->
+
             val radioButton = findViewById<RadioButton>(checkedId)
 
-            storeLinkData?.let {
-                viewModel.fullLinkData.postValue(it.copy(subdomain = radioButton.text.toString()))
+            radioButton?.text?.let {
+                if(radioButton.isChecked){
 
+                    storeLinkData?.let {
+                        viewModel.fullLinkData.postValue(it.copy(subdomain = radioButton.text.toString()))
+
+                    }
+                    subDomainType = SubDomainType.SUGGESTION
+
+                    return@setOnCheckedChangeListener
+                }
             }
-            subDomainType = SubDomainType.SUGGESTION
+            subDomainType = null
+            storeLinkData?.let {
+                viewModel.fullLinkData.postValue(it.copy(subdomain = null))
+            }
+
+
 
         }
 
@@ -475,8 +510,11 @@ class GenerateLinkActivity : AppCompatActivity() {
 
         }
 
-        binding.imgAddSubdomain.setOnClickListener {
-            addSubdomain()
+        binding.imgClearSubdomain.setOnClickListener {
+            binding.subdomainRadioGroup.clearCheck()
+        }
+        binding.imgClearSubdomainSug.setOnClickListener {
+            binding.subdomainSuggRadioGroup.clearCheck()
         }
 
         binding.btnSubmit.setOnClickListener {
@@ -543,6 +581,7 @@ class GenerateLinkActivity : AppCompatActivity() {
             .setCancelable(true)
             .setBodyText("${storeLinkData?.domain} is a custom domain. Please create the domain first")
             .setPositiveButton("Continue") {
+                it?.hideDialog()
                 startActivity(Intent(this, DomainCreateActivity::class.java).putExtra(Constant.CUSTOM_DOMAIN, storeLinkData?.domain))
 
             }.setNegativeButton("Cancel") {
@@ -557,13 +596,14 @@ class GenerateLinkActivity : AppCompatActivity() {
             .setCancelable(true)
             .setBodyText("${storeLinkData?.subdomain} is a custom Sub Domain. Please create the Sub Domain first")
             .setPositiveButton("Continue") {
-                startActivity(Intent(this, DomainCreateActivity::class.java).putExtra(Constant.CUSTOM_DOMAIN, storeLinkData?.domain))
+                it?.hideDialog()
+                startActivity(Intent(this, SubdomainCreateActivity::class.java).putExtra(Constant.CUSTOM_SUB_DOMAIN, storeLinkData?.subdomain))
 
             }.setNegativeButton("Cancel") {
                 it?.hideDialog()
             }
             .build()
-                .showDialog()
+            .showDialog()
     }
 
 

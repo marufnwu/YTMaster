@@ -86,6 +86,7 @@ class LoginActivity : AppCompatActivity() {
                         loadingDialog.hide()
 
                     }
+                    else -> {}
                 }
             }
         }

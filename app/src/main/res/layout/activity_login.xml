@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -8,52 +8,100 @@
     tools:context=".ui.login.LoginActivity">
 
     <LinearLayout
-        android:padding="10dp"
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-        <pl.droidsonroids.gif.GifImageView
-            android:layout_margin="10dp"
-            android:scaleType="fitXY"
+        <LinearLayout
+            android:padding="10dp"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_200sdp"/>
-    </LinearLayout>
+            android:layout_height="wrap_content">
+            <pl.droidsonroids.gif.GifImageView
+                android:src="@drawable/sign_up"
+                android:layout_margin="10dp"
+                android:scaleType="fitXY"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_200sdp"/>
+        </LinearLayout>
 
-    <TextView
-        android:shadowColor="@color/black"
-        android:shadowDy="4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/_20sdp"
-        android:fontFamily="@font/allerta_stencil"
-        android:text="@string/login_qoutes"
-        android:textSize="@dimen/_20sdp" />
+        <TextView
+            android:layout_marginTop="@dimen/_20sdp"
+            android:shadowColor="@color/black"
+            android:shadowDy="4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_20sdp"
+            android:fontFamily="@font/allerta_stencil"
+            android:text="@string/login_qoutes"
+            android:textSize="@dimen/_20sdp" />
 
-    <LinearLayout
-        android:layout_marginTop="@dimen/_20sdp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
 
-        <com.github.nikartm.button.FitButton
-            app:fb_fontFamilyRes="@font/ubuntu_bold"
+        <RelativeLayout
+            android:layout_marginTop="@dimen/_20sdp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="@dimen/_50sdp"
+                    android:layout_height="@dimen/_50sdp"
+                    android:src="@drawable/shield" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/_8sdp"
+                    android:text="100% safe and secure login"
+                    android:textColor="@color/Green"
+                    android:textSize="@dimen/_10sdp" />
+            </LinearLayout>
+
+        </RelativeLayout>
+
+
+        <RelativeLayout
             android:id="@+id/btnLogin"
+            android:layout_gravity="center_vertical"
+            android:background="@color/colorPrimaryVariant"
+            android:layout_margin="@dimen/_15sdp"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_40sdp"
-            android:layout_margin="32dp"
-            android:enabled="true"
-            android:gravity="center"
-            app:fb_cornerRadius="@dimen/_25sdp"
-            app:fb_divHeight="@dimen/_30sdp"
-            app:fb_rippleColor="#FBE9E7"
-            app:fb_iconWidth="28dp"
-            app:fb_iconHeight="28dp"
-            app:fb_iconPosition="left"
-            app:fb_iconMarginStart="20dp"
-            app:fb_iconMarginEnd="16dp"
-            app:fb_icon="@drawable/google"
-            app:fb_textPaddingStart="16dp"
-            app:fb_textColor="#FFF"
-            app:fb_text="Login With Google"
-            app:fb_backgroundColor="@color/colorPrimaryVariant"/>
+            android:layout_height="@dimen/_40sdp">
 
+            <androidx.cardview.widget.CardView
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                app:cardCornerRadius="@dimen/_2sdp"
+                android:layout_margin="@dimen/_2sdp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:cropToPadding="true"
+                    android:padding="@dimen/_2sdp"
+                    android:background="@color/white"
+                    android:layout_gravity="center_vertical"
+                    android:layout_margin="@dimen/_2sdp"
+                    android:src="@drawable/google"
+                    android:layout_width="@dimen/_35sdp"
+                    android:layout_height="wrap_content"/>
+
+            </androidx.cardview.widget.CardView>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="Login With Google"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_16sdp" />
+
+        </RelativeLayout>
     </LinearLayout>
-</LinearLayout>
+
+
+</RelativeLayout>

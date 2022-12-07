@@ -1,20 +1,34 @@
 package com.sikderithub.viewsgrow.ui.profile
 
+import android.app.Dialog
+import android.content.ClipData
+import android.content.ClipboardManager
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.method.DigitsKeyListener
 import android.util.Log
 import android.view.View
+import android.view.Window
+import android.widget.LinearLayout
+import android.widget.TextView
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.github.nikartm.button.FitButton
+import com.google.android.material.textfield.TextInputEditText
+import com.google.android.material.textfield.TextInputLayout
 import com.sikderithub.viewsgrow.Model.Link
 import com.sikderithub.viewsgrow.Model.Profile
+import com.sikderithub.viewsgrow.R
 import com.sikderithub.viewsgrow.adapter.LinkListAdapter
 import com.sikderithub.viewsgrow.databinding.ActivityProfileBinding
 import com.sikderithub.viewsgrow.ui.login.LoginActivity
 import com.sikderithub.viewsgrow.ui.my_link.MyLinkActivity
 import com.sikderithub.viewsgrow.utils.*
 import com.sikderithub.viewsgrow.utils.MyExtensions.setUrl
+import com.sikderithub.viewsgrow.utils.MyExtensions.shortToast
 
 class ProfileActivity : AppCompatActivity() {
 
@@ -153,6 +167,14 @@ class ProfileActivity : AppCompatActivity() {
         binding.recentLinkSeeAll.setOnClickListener {
             startActivity(Intent(this, MyLinkActivity::class.java))
         }
+        binding.btnLogout.setOnClickListener {
+            MyApp.logout()
+            finish()
+        }
+
+        binding.btnAddChannel.setOnClickListener {
+            showAddChannelDialog()
+        }
 
     }
 
@@ -198,6 +220,79 @@ class ProfileActivity : AppCompatActivity() {
             }
         }
     }
+
+    private fun showAddChannelDialog() {
+        val dialog = Dialog(this)
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.setCancelable(true)
+        dialog.setContentView(R.layout.simple_edittext_dialog)
+
+        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        val window: Window? = dialog.window
+        window?.setLayout(
+            LinearLayout.LayoutParams.MATCH_PARENT,
+            LinearLayout.LayoutParams.WRAP_CONTENT
+        )
+        val txtTitle = dialog.findViewById<TextView>(R.id.txtDialogTittle)
+        txtTitle.setText("Add Channel")
+
+        val linkInput = dialog.findViewById<TextInputEditText>(R.id.subdomainTxtInput)
+        val linkInputLayout = dialog.findViewById<TextInputLayout>(R.id.edtSubdomain)
+        val positive = dialog.findViewById<FitButton>(R.id.btnSubmit)
+        val negative = dialog.findViewById<TextView>(R.id.txtCancel)
+
+
+        linkInputLayout.hint = "Enter youtube channel url"
+
+        positive.setText("Add")
+        positive.setOnClickListener {
+
+            val channel = linkInput.text.toString()
+
+            if(channel.isEmpty()){
+                shortToast("Channel name must not be empty")
+                return@setOnClickListener
+            }
+
+            if(CommonMethod.isYoutubeChanelLinkValid(channel)!=null){
+                val shortName = CommonMethod.isYoutubeChanelLinkValid(channel)
+                Coroutines.main {
+                    try {
+                        val res = (application as MyApp)
+                            .myApi
+                            .updateChannel(shortName)
+
+                        if(res.isSuccessful && res.body()!=null){
+                            val body = res.body()!!
+
+                            shortToast(body.msg)
+
+                            if(!body.error){
+                                dialog.dismiss()
+                            }
+                        }
+
+                    }catch (e:Exception){
+                        shortToast(e.message!!)
+                    }
+                }
+            }else{
+                shortToast("Youtube channel link not valid")
+            }
+
+
+
+        }
+
+        negative.setOnClickListener{
+            dialog.dismiss()
+
+        }
+
+
+        dialog.show()
+    }
+
 
     override fun onResume() {
         super.onResume()

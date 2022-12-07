@@ -3,9 +3,11 @@ package com.sikderithub.viewsgrow.utils
 import android.app.Application
 import android.content.Context
 import androidx.appcompat.app.AppCompatDelegate
+import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.FirebaseApp
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.messaging.FirebaseMessaging
 import com.google.firebase.messaging.ktx.messaging
 import com.sikderithub.viewsgrow.repo.network.MyApi
 import io.paperdb.Paper
@@ -39,6 +41,31 @@ class MyApp : Application() {
 
         fun logout(){
             LocalDB.removeLogin()
+        }
+
+        fun updateFcmToken(){
+            try {
+                if(isLogged()){
+
+                    FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
+                        if (task.isSuccessful) {
+                            val token = task.result
+                            Coroutines.main {
+                                try {
+                                    (applicationContext() as MyApp).myApi
+                                        .updateFcmToken(token)
+                                }catch (e:Exception){
+
+                                }
+                            }
+                        }
+                    })
+
+
+                }
+            }catch (e:Exception){
+
+            }
         }
 
 

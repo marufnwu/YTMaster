@@ -121,6 +121,11 @@ interface MyApi {
     ):Response<GenericResponse<CreateNewDomainPage>>
 
 
+    @GET("api/plan.createNewSubDomainPage.php")
+    suspend fun createNewSubDomainPage(
+    ):Response<GenericResponse<CreateNewDomainPage>>
+
+
     @GET("api/user.getHighlightedChannel.php")
     suspend fun getHighlightedChannel(
         @Query("currPage") currPage: Int = 1,
@@ -128,7 +133,18 @@ interface MyApi {
     ):Response<GenericResponse<Paging<HighLightedChannel>>>
 
     @GET("api/user.accessTokenAuth.php")
-    suspend fun accessTokenAuth():Response<Login>
+    suspend fun accessTokenAuth(
+    ):Response<Login>
+
+    @GET("api/user.updateFcmToken.php")
+    suspend fun updateFcmToken(
+        @Query("token") token : String?
+    ):Response<Int>
+
+    @GET("api/user.updateChannel.php")
+    suspend fun updateChannel(
+        @Query("channel") token : String?
+    ):Response<MyResponse>
 
 
     @FormUrlEncoded
@@ -137,11 +153,21 @@ interface MyApi {
         @Field("channelName") channelName: String,
     ):Response<GenericResponse<Transaction>>
 
+    @FormUrlEncoded
+    @POST("api/plan.createSubDomainRef.php")
+    suspend fun createSubDomainRef(
+        @Field("channelName") channelName: String,
+    ):Response<GenericResponse<Transaction>>
+
 
     @GET("api/domain.getCustomDomainSuggetion.php")
     suspend fun getCustomDomainSuggetions(
         @Query("videoId") videoId:String
     ):Response<GenericResponse<List<String>>>
+
+    @GET("api/page.home.php")
+    suspend fun homeData(
+    ):Response<GenericResponse<HomePage>>
 
 
 

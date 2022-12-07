@@ -47,15 +47,19 @@ class SplashViewModel(myApi: MyApi) : ViewModel(), LifecycleObserver {
     fun accessTokenAuth(){
         _auth.postValue(ScreenState.Loading())
         Coroutines.main {
-            val res = ytRepo.accessTokenAuth()
-            if(res.isSuccessful && res.body()!=null){
-                if(res.body()!!.error){
-                    _auth.postValue(ScreenState.Error(message = res.body()!!.msg))
+            try {
+                val res = ytRepo.accessTokenAuth()
+                if(res.isSuccessful && res.body()!=null){
+                    if(res.body()!!.error){
+                        _auth.postValue(ScreenState.Error(message = res.body()!!.msg))
+                    }else{
+                        _auth.postValue(ScreenState.Success(data = res.body()))
+                    }
                 }else{
-                    _auth.postValue(ScreenState.Success(data = res.body()))
+                    _auth.postValue(ScreenState.Error(message = res.message()))
                 }
-            }else{
-                _auth.postValue(ScreenState.Error(message = res.message()))
+            }catch (e:Exception){
+                _auth.postValue(ScreenState.Error(message = "Something went wrong"))
             }
         }
 
