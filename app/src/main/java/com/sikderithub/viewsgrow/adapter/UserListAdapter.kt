@@ -58,7 +58,8 @@ class UserListAdapter(val context: Context, private val users: MutableList<Profi
 
             binding.root.setOnClickListener {
                 val intent = Intent(context, ProfileActivity::class.java)
-                intent.putExtra(Constant.OTHER_PROFILE, user)
+                Constant.OTHER_USER_PROFILE = user
+                intent.putExtra(Constant.OTHER_PROFILE, true)
                 context.startActivity(intent)
             }
         }

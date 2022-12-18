@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_margin="-3dp"
+    android:orientation="horizontal"
+    android:layout_height="wrap_content">
+
+    <CheckBox
+        android:buttonTint="@color/colorPrimaryVariant"
+        android:minHeight="0dp"
+        android:minWidth="0dp"
+        android:id="@+id/checkbox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <LinearLayout
+        android:layout_gravity="center_vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:textSize="@dimen/_12sdp"
+            android:text="newvideo.link"
+            android:textStyle="bold"
+            android:textColor="@color/colorPrimaryVariant"
+            android:id="@+id/txtDomain"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:text="/"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <EditText
+            android:drawableBottom="@color/Red"
+            android:textColor="@color/RoyalBlue"
+            android:textSize="@dimen/_10sdp"
+            android:maxLength="30"
+            android:digits="abcdefghijklmnopqrstuvwxyz1234567890_-"
+            android:inputType="textNoSuggestions"
+            android:background="@color/transparent"
+            android:layout_margin="-3dp"
+            android:id="@+id/edtSuffix"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+
+
+</LinearLayout>

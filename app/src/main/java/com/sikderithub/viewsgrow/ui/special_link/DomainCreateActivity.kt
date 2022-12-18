@@ -1,6 +1,5 @@
 package com.sikderithub.viewsgrow.ui.special_link
 
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
@@ -17,9 +16,7 @@ import com.sikderithub.viewsgrow.R
 import com.sikderithub.viewsgrow.adapter.DomainPlanListAdapter
 import com.sikderithub.viewsgrow.databinding.ActivityDomainCreateBinding
 import com.sikderithub.viewsgrow.repo.network.MyApi
-import com.sikderithub.viewsgrow.ui.login.LoginActivity
 import com.sikderithub.viewsgrow.utils.*
-import com.sikderithub.viewsgrow.utils.MyExtensions.shortToast
 
 class DomainCreateActivity : AppCompatActivity() {
     val planList: MutableList<DomainPlan> = mutableListOf()
@@ -29,7 +26,7 @@ class DomainCreateActivity : AppCompatActivity() {
 
 
     val viewModel : DomainCreateViewModel by lazy { ViewModelProvider(this, MyViewModelProvider((application as MyApp).myApi))[DomainCreateViewModel::class.java] }
-
+    var domainType : String = "purchase"
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityDomainCreateBinding.inflate(layoutInflater)
@@ -44,6 +41,10 @@ class DomainCreateActivity : AppCompatActivity() {
             it.getStringExtra(Constant.CUSTOM_DOMAIN)?.let {
                 binding.chName.editText?.setText(it)
             }
+
+             it.getStringExtra(Constant.DOMAIN_PURCHASE_TYPE)?.let {
+                 domainType = it
+             }
         }
 
 
@@ -52,7 +53,7 @@ class DomainCreateActivity : AppCompatActivity() {
 
         addObserver()
 
-        viewModel.getPage()
+        viewModel.getPage(domainType)
 
     }
 
@@ -76,7 +77,7 @@ class DomainCreateActivity : AppCompatActivity() {
             val chName= binding.chName.editText?.text.toString()
 
             if(chName.isNotEmpty()){
-                viewModel.requestDomain(chName)
+                viewModel.requestDomain(chName, domainType)
                 //PlayPayment(this)
                   //  .lunch()
 
@@ -145,7 +146,11 @@ class DomainCreateActivity : AppCompatActivity() {
             return null
         }
 
-        return BuildConfig.BASE_URL+"payment/pay.php?gatewayOrderId=${data.orderId}&transactionRef=${data.reference}&type=${data.type}&gateway=${data.gateway}"
+        if(data.link.isNotEmpty()){
+            return data.link
+        }
+
+        return null
     }
 
     private fun setPlanList(list: List<DomainPlan>) {
@@ -153,7 +158,7 @@ class DomainCreateActivity : AppCompatActivity() {
             binding.progress.visibility = View.GONE
             binding.txtError.visibility = View.GONE
             binding.layoutPackage.visibility = View.VISIBLE
-            binding.txtPrice.text = "Price Rs. ${list.get(0).price}"
+            binding.txtPrice.text = "Price Rs. ${list.get(0).price} +GST"
         }else{
             binding.progress.visibility = View.GONE
             binding.txtError.visibility = View.VISIBLE

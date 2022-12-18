@@ -4,7 +4,7 @@
     android:orientation="vertical"
     android:gravity="center_horizontal"
     android:layout_margin="@dimen/_3sdp"
-    android:layout_width="wrap_content"
+    android:layout_width="@dimen/_60sdp"
     android:layout_height="wrap_content">
 
     <de.hdodenhof.circleimageview.CircleImageView
@@ -16,12 +16,15 @@
         android:layout_height="@dimen/_50sdp"/>
 
     <TextView
+        android:minLines="2"
+        android:gravity="center"
         android:id="@+id/txtName"
         android:textSize="@dimen/_8sdp"
         android:textColor="@color/colorPrimaryVariant"
         android:layout_marginTop="@dimen/_2sdp"
         android:fontFamily="@font/ubuntu"
-        android:text="Name Of User"
+        android:maxEms="8"
+        android:text="Name Of "
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
 

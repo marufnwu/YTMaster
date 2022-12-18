@@ -3,7 +3,7 @@ package com.sikderithub.viewsgrow.Model
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
-class Profile : Serializable {
+class Profile{
     @SerializedName("id")
     var id: Int? = null
     @SerializedName("full_name")

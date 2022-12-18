@@ -5,7 +5,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.sikderithub.viewsgrow.Model.CreateNewDomainPage
-import com.sikderithub.viewsgrow.Model.MyResponse
 import com.sikderithub.viewsgrow.Model.Transaction
 import com.sikderithub.viewsgrow.repo.YtRepo
 import com.sikderithub.viewsgrow.repo.network.MyApi
@@ -43,12 +42,12 @@ class DomainCreateViewModel(myApi: MyApi) : ViewModel() {
     val getSubDomainPage : LiveData<ScreenState<CreateNewDomainPage>>
         get() = _subDomainPage
 
-    fun getPage(){
+    fun getPage(domainType: String) {
         Log.d("Called", "YesCallded")
         Coroutines.main {
            try {
                _domainPage.postValue(ScreenState.Loading())
-               val res = ytRepo.getCreateNewDomainPage()
+               val res = ytRepo.getCreateNewDomainPage(domainType)
                if(res.isSuccessful && res.body()!=null){
                    val page = res.body()!!
                    if(!page.error){
@@ -86,11 +85,11 @@ class DomainCreateViewModel(myApi: MyApi) : ViewModel() {
         }
     }
 
-    fun requestDomain(chName: String){
+    fun requestDomain(chName: String, domainType: String){
         Coroutines.main {
             try {
                 _requestDomain.postValue(ScreenState.Loading())
-                val res = ytRepo.requestDomain(chName)
+                val res = ytRepo.requestDomain(chName, domainType)
 
                 if(res.isSuccessful && res.body()!=null){
 

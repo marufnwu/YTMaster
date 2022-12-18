@@ -211,7 +211,19 @@ class SplashActivity : AppCompatActivity() {
 
         if(MyApp.isLogged()){
             //checkAuthorization
-            viewModel.accessTokenAuth()
+            if(CommonMethod.haveInternet(this)){
+                viewModel.accessTokenAuth()
+            }else{
+                GenericDialog.make(this)
+                    .setCancelable(false)
+                    .setIconType(GenericDialog.IconType.WARNING)
+                    .setBodyText(getString(R.string.no_internet))
+                    .setPositiveButton("Retry"){
+                        it.hideDialog()
+                        checkLogin()
+                    }.build()
+                    .showDialog()
+            }
         }else{
             //go to main activity
            goToMainActivity()

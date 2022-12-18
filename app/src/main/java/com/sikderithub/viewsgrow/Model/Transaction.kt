@@ -7,4 +7,5 @@ data class Transaction(
     @SerializedName("orderId") val orderId:String = "",
     @SerializedName("type") val type:String = "",
     @SerializedName("gateway") val gateway:String = "",
+    @SerializedName("link") val link:String = "",
 )

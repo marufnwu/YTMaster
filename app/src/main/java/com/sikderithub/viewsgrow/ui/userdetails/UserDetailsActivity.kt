@@ -125,7 +125,7 @@ class UserDetailsActivity : AppCompatActivity() {
             var ch = ""
             if (!chLink.isEmpty()){
                 if(CommonMethod.isYoutubeChanelLinkValid(chLink)!=null){
-                    ch = CommonMethod.isYoutubeChanelLinkValid(chLink)!!
+                    ch = chLink
 
                 }else{
                     shortToast("Youtube channel link is not valid")

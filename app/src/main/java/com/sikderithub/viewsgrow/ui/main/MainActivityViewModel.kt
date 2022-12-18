@@ -115,17 +115,21 @@ class MainActivityViewModel(private val  myApi: MyApi) : ViewModel() {
 
     fun homeData(){
         Coroutines.main {
-            homePage.postValue(ScreenState.Loading())
-            val res = ytRepo.getHomePage()
-            if(res.isSuccessful && res.body()!=null){
-                val result = res.body()!!
-                if(!result.error){
-                    homePage.postValue(ScreenState.Success(data = result.data))
-                }else{
-                    homePage.postValue(ScreenState.Error(message = result.msg))
-                }
-            }else{
+            try {
                 homePage.postValue(ScreenState.Loading())
+                val res = ytRepo.getHomePage()
+                if(res.isSuccessful && res.body()!=null){
+                    val result = res.body()!!
+                    if(!result.error){
+                        homePage.postValue(ScreenState.Success(data = result.data))
+                    }else{
+                        homePage.postValue(ScreenState.Error(message = result.msg))
+                    }
+                }else{
+                    homePage.postValue(ScreenState.Error(message = "Something went wrong"))
+                }
+            }catch (e: Exception){
+                homePage.postValue(ScreenState.Error(message = "Something went wrong"))
             }
         }
     }

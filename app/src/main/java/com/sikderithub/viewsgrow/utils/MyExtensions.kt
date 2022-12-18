@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.ContextWrapper
 import android.graphics.drawable.Drawable
 import android.net.Uri
+import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.Toast
@@ -70,6 +71,7 @@ object MyExtensions {
 
 
     fun ImageView.addBanner(banner: Banner, context: Context?= null, applyCircle: Boolean = false): Boolean {
+        Log.d("ImageExtension", "Action url found")
 
         if(!banner.error){
 
@@ -88,16 +90,20 @@ object MyExtensions {
             }
 
             if(banner.actionUrl!=null && context!=null){
-                setOnClickListener {
+                Log.d("ImageExtension", "Action url found")
+
+                this.setOnClickListener {
+                    Log.d("ImageExtension", "Action url cliked")
+
                     CommonMethod.openLink(banner.actionUrl!!, context)
                 }
+            }else{
+                Log.d("ImageExtension", "Action url found")
             }
 
             this.visibility = View.VISIBLE
 
             return true
-
-
 
 
         }

@@ -19,9 +19,9 @@ import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
-import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.github.drjacky.imagepicker.ImagePicker
 import com.github.nikartm.button.FitButton
@@ -33,6 +33,7 @@ import com.nguyencse.URLEmbeddedTask
 import com.permissionx.guolindev.PermissionX
 import com.sikderithub.viewsgrow.Model.*
 import com.sikderithub.viewsgrow.R
+import com.sikderithub.viewsgrow.adapter.*
 import com.sikderithub.viewsgrow.databinding.ActivityGenerateLinkBinding
 import com.sikderithub.viewsgrow.repo.network.MyApi
 import com.sikderithub.viewsgrow.ui.create_subdomain.SubdomainCreateActivity
@@ -60,6 +61,14 @@ class GenerateLinkActivity : AppCompatActivity() {
         SUGGESTION
     }
 
+    enum class Selection{
+        DOMAIN,
+        SUBDOMAIN,
+        SUBSCRIPTION,
+        DOMAIN_SUGGESTIONS
+    }
+
+    lateinit var subdomainAdapter: SubdomainAdapter
     private var subDomainDialog: Dialog? = null
     private var suffixCheckcall: Call<GenericResponse<Boolean>>? = null
     private var account: GoogleSignInAccount? = null
@@ -75,6 +84,8 @@ class GenerateLinkActivity : AppCompatActivity() {
 
     private var domainType : DomainType?  = null
     private var subDomainType : SubDomainType?  = null
+    private var selection : Selection?  = null
+
 
      data class LinkMetaData(
         var loading : Boolean = true,
@@ -95,6 +106,18 @@ class GenerateLinkActivity : AppCompatActivity() {
 
     private var linkMetaData : LinkMetaData = LinkMetaData()
     private var customThumb : CustomThumb = CustomThumb()
+
+
+    lateinit var domainAdapter : DomainAdapter
+     var subscriptionDomainAdapter : DomainAdapter? = null
+     var suggestionDomainAdapter : DomainAdapter? =null
+
+    private val domainList : MutableList<Domain> = mutableListOf()
+    private val subDomainList : MutableList<Subdomain> = mutableListOf()
+
+    private var domainSubscriptionPlan : DomainPlan? = null
+    private var domainPurchasePlan : DomainPlan? = null
+    private var subdomainSubscriptionPlan : DomainPlan? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -150,9 +173,8 @@ class GenerateLinkActivity : AppCompatActivity() {
                 when(state){
                     is ScreenState.Success->{
                         loadingDialog.hide()
-                        setDomains(state.data!!.domains)
-                        setSubdomain(state.data.subdomainRes, state.data.subDomainSuggestions)
-                        addDomainSuggestions(state.data.domainSuggestions)
+                        setData(it.data)
+
                     }
                     is ScreenState.Loading->{
                         loadingDialog.show()
@@ -172,13 +194,11 @@ class GenerateLinkActivity : AppCompatActivity() {
             it?.let {
                 storeLinkData = it
                 checkSuffix()
-                binding.txtGenLink.text = it.toString()
             }
 
         }
         viewModel.suffix.observe(this){
             it?.let {
-                binding.edtSuffix.setText(it)
             }
         }
 
@@ -237,22 +257,18 @@ class GenerateLinkActivity : AppCompatActivity() {
                                 binding.btnSubmit.isEnabled = true
 
                                 suffixAvailable = true
-                                binding.imgSuffixStatus.setImageDrawable(getDrawable(R.drawable.success))
                             }else{
                                 //not available
                                 binding.btnSubmit.isEnabled = false
 
                                 suffixAvailable = false
-                                binding.imgSuffixStatus.setImageDrawable(getDrawable(R.drawable.error))
                             }
                         }
                     }
                     is ScreenState.Loading->{
                         binding.btnSubmit.isEnabled = false
                         suffixAvailable = false
-                        Glide.with(this)
-                            .load(getDrawable(R.drawable.loadin_small))
-                            .into(binding.imgSuffixStatus)
+
                     }
                     is ScreenState.Error->{
                         binding.btnSubmit.isEnabled = false
@@ -362,164 +378,183 @@ class GenerateLinkActivity : AppCompatActivity() {
     private fun addDomainSuggestions(domains: List<String>?) {
         domains?.let {
             if(it.isNotEmpty()){
-                it.forEach{
-                    var radioButton: RadioButton?
-                    radioButton = RadioButton(this)
-                    radioButton.left
-                    radioButton.setCompoundDrawables(null, null, resources.getDrawable(R.drawable.paid),null)
-                    radioButton.text = it
-                    binding.domainSugRadioGroup.addView(radioButton)
-                }
 
-                binding.layoutDomainSuggestion.visibility = View.VISIBLE
             }
         }
     }
 
     private fun addNewSubdomain(subdomain: Subdomain) {
-        binding.subdomainRadioGroup.visibility = View.VISIBLE
-        binding.txtSubdomain.visibility = View.GONE
 
-            val radioButton: RadioButton?
-
-            radioButton = RadioButton(this)
-            radioButton.text = subdomain.name
-            binding.subdomainRadioGroup.addView(radioButton)
 
     }
 
     private fun setSubdomain(subdomainRes: SubdomainRes, subdomainSugg: List<String>) {
 
-        if(subdomainRes.error || subdomainRes.subdomains.isEmpty()){
-            binding.layoutSubdomain.visibility = View.GONE
-            binding.txtSubdomain.visibility = View.VISIBLE
-            binding.txtSubdomain.text = subdomainRes.msg
 
-            if(subdomainSugg.isNotEmpty()){
-                binding.layoutSubdomainSugg.visibility = View.VISIBLE
-                binding.txtSubdomainSugg.visibility = View.GONE
-
-                subdomainSugg.forEach {
-
-                    val radioButton = RadioButton(this)
-                    radioButton.text = it
-                    binding.subdomainSuggRadioGroup.addView(radioButton)
-                }
-            }
-
-
-        }else{
-            if(subdomainRes.subdomains.isEmpty()){
-                binding.subdomainRadioGroup.visibility = View.GONE
-                binding.txtSubdomain.visibility = View.VISIBLE
-                binding.txtSubdomain.text = "You haven't add any subdomain"
-
-            }else{
-                binding.layoutSubdomain.visibility = View.VISIBLE
-                binding.txtSubdomain.visibility = View.GONE
-
-                var radioButton: RadioButton?
-                for(subdomain in subdomainRes.subdomains){
-                    radioButton = RadioButton(this)
-                    radioButton.text = subdomain.name
-                    binding.subdomainRadioGroup.addView(radioButton)
-
-                }
-            }
-        }
     }
 
 
-    private fun setDomains(domains: List<Domain>) {
-        var radioButton: RadioButton?
-        for(domain in domains){
-            radioButton = RadioButton(this)
-            radioButton.text = domain.name
-            binding.domainRadioGroup.addView(radioButton)
-            if(domain.main==1){
-                binding.domainRadioGroup.check(radioButton.id) 
+    @SuppressLint("NotifyDataSetChanged")
+    private fun setData(page: LinkGenPage?) {
+
+        page?.let { it ->
+
+            domainPurchasePlan  = it.domainPurchasePlan
+            domainSubscriptionPlan  = it.domainSubscriptionPlan
+            subdomainSubscriptionPlan  = it.subDomainPlan
+
+            var mainDomain = it.domains.find { it.main == 1 }
+
+            if(mainDomain==null){
+                mainDomain = Domain(name = "yourchannelname.link", type = "suggestion")
             }
+
+
+
+            if(it.domains.isNotEmpty()){
+                domainList.clear()
+                domainList.addAll(it.domains)
+
+                if(it.subdomainRes.subdomains.isNotEmpty()){
+                    binding.layoutSubdomain.visibility = View.VISIBLE
+
+                    subdomainAdapter = SubdomainAdapter(this, it.subdomainRes.subdomains, mainDomain, it.uniqueRef.ref)
+
+                    subdomainAdapter.setListener(object : SubDomainSelectedListener {
+                        override fun onItemSelected(subDomainSelected: SubDomainSelected) {
+                            selection = Selection.SUBDOMAIN
+                            domainAdapter.removeSelection()
+                            suggestionDomainAdapter?.removeSelection()
+                            subscriptionDomainAdapter?.removeSelection()
+
+                            updatePublishButton()
+
+                        }
+
+                    })
+                    binding.recySubDomain.adapter = subdomainAdapter
+                }else{
+                    binding.layoutSubdomain.visibility = View.GONE
+                }
+
+
+
+
+                domainAdapter = DomainAdapter(this, domainList)
+                selection = Selection.DOMAIN
+                updatePublishButton()
+                domainAdapter.setListener(object : DomainSelectedListener {
+                    override fun onItemSelected(selected: DomainSelected) {
+                        selected.domain?.let {
+                            selection = Selection.DOMAIN
+                            subdomainAdapter.removeSelection()
+                            subscriptionDomainAdapter?.removeSelection()
+                            suggestionDomainAdapter?.removeSelection()
+                            subdomainAdapter.removeSelection()
+
+
+
+                            subdomainAdapter.updateDomain(it)
+                            updatePublishButton()
+                            domainAdapter.notifyDataSetChanged()
+
+                        }
+                    }
+
+                    override fun onSuffixChange(suffix: String) {
+                    }
+
+                })
+
+                binding.recyDomain.adapter = domainAdapter
+                domainAdapter.notifyDataSetChanged()
+
+                if(it.buyDomain.isNotEmpty()){
+                    binding.layoutSubscriptionDomain.visibility = View.VISIBLE
+
+                    subscriptionDomainAdapter = DomainAdapter(this, it.buyDomain)
+                    updatePublishButton()
+                    subscriptionDomainAdapter?.setListener(object : DomainSelectedListener {
+                        override fun onItemSelected(domainSelected: DomainSelected) {
+                            domainSelected.domain?.let {
+                                selection = Selection.SUBSCRIPTION
+                                subdomainAdapter.removeSelection()
+                                suggestionDomainAdapter?.removeSelection()
+                                domainAdapter.removeSelection()
+                                subdomainAdapter.updateDomain(it)
+
+                                updatePublishButton()
+                                subscriptionDomainAdapter?.notifyDataSetChanged()
+
+                            }
+                        }
+
+                        override fun onSuffixChange(suffix: String) {
+                        }
+
+                    })
+
+                    binding.recyDomainSubscription.adapter = subscriptionDomainAdapter
+                }else{
+                    binding.layoutSubscriptionDomain.visibility = View.GONE
+
+                }
+
+                if(it.domainSuggestions.isNotEmpty()){
+                    binding.layoutSuggestionDomain.visibility = View.VISIBLE
+
+                    suggestionDomainAdapter = DomainAdapter(this, it.domainSuggestions)
+                    updatePublishButton()
+                    suggestionDomainAdapter?.setListener(object : DomainSelectedListener {
+                        override fun onItemSelected(domainSelected: DomainSelected) {
+                            domainSelected.domain?.let {
+                                selection = Selection.DOMAIN_SUGGESTIONS
+                                subdomainAdapter.removeSelection()
+                                subscriptionDomainAdapter?.removeSelection()
+                                domainAdapter.removeSelection()
+
+                                subdomainAdapter.updateDomain(it)
+
+                                updatePublishButton()
+
+                                suggestionDomainAdapter?.notifyDataSetChanged()
+
+                            }
+                        }
+
+                        override fun onSuffixChange(suffix: String) {
+                        }
+
+                    })
+
+                    binding.recyDomainSuggestion.adapter = suggestionDomainAdapter
+                }else{
+                    binding.layoutSuggestionDomain.visibility = View.GONE
+                }
+
+
+
+
+            }
+
         }
+
+
     }
 
     private fun init(){
+        binding.recyDomain.layoutManager = LinearLayoutManager(this)
+        binding.recyDomain.setHasFixedSize(true)
 
-        binding.domainRadioGroup.setOnCheckedChangeListener(domainCheckedListener)
-        binding.domainSugRadioGroup.setOnCheckedChangeListener(domainSuggestionsCheckedListener)
-        binding.subdomainRadioGroup.setOnCheckedChangeListener { group, checkedId ->
+        binding.recyDomainSubscription.layoutManager = LinearLayoutManager(this)
+        binding.recyDomainSubscription.setHasFixedSize(true)
 
-            val radioButton = findViewById<RadioButton>(checkedId)
+        binding.recyDomainSuggestion.layoutManager = LinearLayoutManager(this)
+        binding.recyDomainSuggestion.setHasFixedSize(true)
 
+        binding.recySubDomain.layoutManager = LinearLayoutManager(this)
+        binding.recySubDomain.setHasFixedSize(true)
 
-            radioButton?.text?.let {
-                if (radioButton.isChecked) {
-                    storeLinkData?.let {
-                        viewModel.fullLinkData.postValue(it.copy(subdomain = radioButton.text.toString()))
-                    }
-
-                    subDomainType = SubDomainType.REGISTERED
-
-                    return@setOnCheckedChangeListener
-                }
-
-            }
-
-
-
-            subDomainType = null
-            storeLinkData?.let {
-                viewModel.fullLinkData.postValue(it.copy(subdomain = null))
-            }
-        }
-
-        binding.subdomainSuggRadioGroup.setOnCheckedChangeListener { group, checkedId ->
-
-            val radioButton = findViewById<RadioButton>(checkedId)
-
-            radioButton?.text?.let {
-                if(radioButton.isChecked){
-
-                    storeLinkData?.let {
-                        viewModel.fullLinkData.postValue(it.copy(subdomain = radioButton.text.toString()))
-
-                    }
-                    subDomainType = SubDomainType.SUGGESTION
-
-                    return@setOnCheckedChangeListener
-                }
-            }
-            subDomainType = null
-            storeLinkData?.let {
-                viewModel.fullLinkData.postValue(it.copy(subdomain = null))
-            }
-
-
-
-        }
-
-        binding.edtSuffix.addTextChangedListener {edt->
-            Log.d("Watcher", edt.toString())
-
-            storeLinkData?.let {
-                viewModel.fullLinkData.postValue(
-                    it.copy(
-                        suffix = edt.toString()
-                    )
-                )
-            }
-
-        }
-
-        binding.imgClearSubdomain.setOnClickListener {
-            binding.subdomainRadioGroup.clearCheck()
-        }
-        binding.imgClearSubdomainSug.setOnClickListener {
-            binding.subdomainSuggRadioGroup.clearCheck()
-        }
-
-        binding.btnSubmit.setOnClickListener {
-            publishLink()
-        }
 
         binding.checkboxSelectThumb.setOnCheckedChangeListener {_, isChecked ->
             viewModel.customThumb.postValue(customThumb.copy(isUse= isChecked))
@@ -534,47 +569,63 @@ class GenerateLinkActivity : AppCompatActivity() {
             checkPermission()
         }
 
+        binding.btnSubmit.setOnClickListener {
+            publishLink()
+        }
+
 
     }
 
-    private val domainCheckedListener : RadioGroup.OnCheckedChangeListener = RadioGroup.OnCheckedChangeListener{ _: RadioGroup, checkedId: Int ->
-        val radioButton = findViewById<RadioButton>(checkedId)
+    private fun updatePublishButton(){
 
-        binding.domainSugRadioGroup.setOnCheckedChangeListener(null)
-        binding.domainSugRadioGroup.clearCheck()
-        binding.domainSugRadioGroup.setOnCheckedChangeListener(domainSuggestionsCheckedListener)
+        selection?.let {
+            if(it==Selection.SUBDOMAIN){
 
+                subdomainAdapter.getSelectedItem()?.let {
+                    if (it.subdomain?.userId!!.equals("0")){
+                        //go to purchase
+                        subdomainSubscriptionPlan?.let {
+                            binding.btnSubmit.setText("Rs. ${it.price} +GST")
+                        }
 
-        storeLinkData?.let {
-            viewModel.fullLinkData.postValue(
-                it.copy(
-                    domain = radioButton.text.toString()
-                )
-
-
-            )
-            domainType = DomainType.REGISTERED
+                    }else{
+                        if(it.domain!!.type.equals("purchase")){
+                            //able to publish
+                            binding.btnSubmit.setText("Publish Link")
+                        }else if(it.domain!!.type.equals("notpurchase")){
+                            //go to subscription
+                            domainSubscriptionPlan?.let {
+                                binding.btnSubmit.setText("Rs. ${it.price} +GST")
+                            }
+                        }else{
+                            //go to custom purchase
+                            domainPurchasePlan?.let {
+                                binding.btnSubmit.setText("Rs. ${it.price} +GST")
+                            }
+                        }
+                    }
+                }
+            }else{
+                //Domain selected
+                when(selection){
+                    Selection.SUBSCRIPTION -> {
+                        domainSubscriptionPlan?.let {
+                            binding.btnSubmit.setText("Rs. ${it.price} +GST")
+                        }
+                    }
+                    Selection.DOMAIN_SUGGESTIONS -> {
+                        domainPurchasePlan?.let {
+                            binding.btnSubmit.setText("Rs. ${it.price} +GST")
+                        }
+                    }
+                    else -> {
+                        binding.btnSubmit.setText("Publish Your Link")
+                    }
+                }
+            }
         }
     }
 
-    private val domainSuggestionsCheckedListener = RadioGroup.OnCheckedChangeListener{ _: RadioGroup, checkedId: Int ->
-        val radioButton = findViewById<RadioButton>(checkedId)
-
-        binding.domainRadioGroup.setOnCheckedChangeListener(null)
-        binding.domainRadioGroup.clearCheck()
-        binding.domainRadioGroup.setOnCheckedChangeListener(domainCheckedListener)
-
-        storeLinkData?.let {
-            viewModel.fullLinkData.postValue(
-                it.copy(
-                    domain = radioButton.text.toString()
-                )
-
-
-            )
-            domainType = DomainType.SUGGESTION
-        }
-    }
 
     private fun domainSuggestionCheckDialog() {
         GenericDialog.make(this)
@@ -763,7 +814,7 @@ class GenerateLinkActivity : AppCompatActivity() {
 
 
 
-        val it = binding.edtSuffix.text
+        val it = "sss" //suffinx
         if (it.toString().isEmpty()){
             viewModel.suffixCheck.postValue(ScreenState.Error(false, "Must not empty"))
 
@@ -771,7 +822,7 @@ class GenerateLinkActivity : AppCompatActivity() {
         }
 
         it?.let {
-            if(it.toString().isNotEmpty()){
+            if(it.isNotEmpty()){
                 suffixCheckcall?.cancel()
 
                 suffixCheckcall =  myApi.suffixCheck(it.toString(), storeLinkData!!.domain, storeLinkData!!.subdomain)
@@ -796,6 +847,7 @@ class GenerateLinkActivity : AppCompatActivity() {
                         viewModel.suffixCheck.postValue(ScreenState.Error(null, "Cancel"))
                     }
 
+
                 })
             }
         }
@@ -806,23 +858,80 @@ class GenerateLinkActivity : AppCompatActivity() {
 
     private fun publishLink() {
 
-        if(domainType!=null){
-            if(domainType == DomainType.SUGGESTION){
-                domainSuggestionCheckDialog()
-                return
+        selection?.let {
+            if(it==Selection.SUBDOMAIN){
+
+                subdomainAdapter.getSelectedItem()?.let {
+                    if (it.subdomain?.userId!!.equals("0")){
+                        //go to purchase
+                        startActivity(Intent(this, SubdomainCreateActivity::class.java).putExtra(Constant.CUSTOM_SUB_DOMAIN, it.subdomain!!.name))
+                    }else{
+                        if(it.domain!!.type.equals("purchase")){
+                            //able to publish
+
+                            viewModel.fullLinkData.postValue(NewFullLink(it.domain!!.name, it.subdomain?.name, it.suffix, LinkType.YOUTUBE))
+
+                            if(link!=null){
+                                viewModel.addNewLink(link!!)
+                            }
+
+
+                        }else if(it.domain!!.type.equals("notpurchase")){
+                            //go to subscription
+                            startActivity(Intent(this, DomainCreateActivity::class.java)
+                                .putExtra(Constant.CUSTOM_DOMAIN, it.domain?.name)
+                                .putExtra(Constant.DOMAIN_PURCHASE_TYPE, "subscription")
+                            )
+                        }else{
+                            //go to custom purchase
+                            startActivity(Intent(this, DomainCreateActivity::class.java)
+                                .putExtra(Constant.CUSTOM_DOMAIN, it.domain?.name)
+                                .putExtra(Constant.DOMAIN_PURCHASE_TYPE, "purchase")
+                            )
+                        }
+                    }
+                }
+            }else{
+                //Domain selected
+                when(selection){
+                    Selection.SUBSCRIPTION -> {
+                        subscriptionDomainAdapter?.let {
+                            it.domainSelected?.let {
+                                startActivity(Intent(this, DomainCreateActivity::class.java)
+                                    .putExtra(Constant.CUSTOM_DOMAIN, it.domain?.name)
+                                    .putExtra(Constant.DOMAIN_PURCHASE_TYPE, "subscription")
+                                )
+                            }
+                        }
+                    }
+                    Selection.DOMAIN_SUGGESTIONS -> {
+                        suggestionDomainAdapter?.let {
+                            it.domainSelected?.let {
+                                startActivity(Intent(this, DomainCreateActivity::class.java)
+                                    .putExtra(Constant.CUSTOM_DOMAIN, it.domain?.name)
+                                    .putExtra(Constant.DOMAIN_PURCHASE_TYPE, "purchase")
+                                )
+                            }
+                        }
+                    }
+                    else -> {
+
+                        domainAdapter?.let {
+                            it.domainSelected?.let {
+                                viewModel.fullLinkData.postValue(NewFullLink(it.domain?.name, null, it.domain?.ref, LinkType.YOUTUBE))
+                                if(link!=null){
+                                    viewModel.addNewLink(link!!)
+                                }
+                            }
+                        }
+
+                    }
+                }
+
             }
         }
 
-        if(subDomainType!=null){
-            if(subDomainType == SubDomainType.SUGGESTION){
-                subDomainSuggestionCheckDialog()
-                return
-            }
-        }
 
-        if(link!=null){
-            viewModel.addNewLink(link!!)
-        }
     }
 
     private fun addSubdomain() {
@@ -955,12 +1064,9 @@ class GenerateLinkActivity : AppCompatActivity() {
         finish()
     }
 
-
-    override fun onStart() {
-        super.onStart()
-        account = GoogleSignIn.getLastSignedInAccount(this)
+    override fun onResume() {
+        super.onResume()
     }
-
 
 
 }

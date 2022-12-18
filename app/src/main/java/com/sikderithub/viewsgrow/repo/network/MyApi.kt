@@ -26,7 +26,7 @@ interface MyApi {
     suspend fun generateUniqueRef():Response<LinkRef>
 
 
-    @GET("api/link.page.php")
+    @GET("api/link.page_v2.php")
     suspend fun linkPage(
         @Query("link") link: String
     ):Response<LinkGenPageResponse>
@@ -118,6 +118,7 @@ interface MyApi {
 
     @GET("api/plan.createNewDomainPage.php")
     suspend fun createNewDomainPage(
+        @Query("type") domainType: String
     ):Response<GenericResponse<CreateNewDomainPage>>
 
 
@@ -151,6 +152,7 @@ interface MyApi {
     @POST("api/plan.createDomainRef.php")
     suspend fun createDomainRef(
         @Field("channelName") channelName: String,
+        @Field("domainType") domainType: String,
     ):Response<GenericResponse<Transaction>>
 
     @FormUrlEncoded

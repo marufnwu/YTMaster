@@ -24,6 +24,14 @@
   *;
 }
 
+-keepclassmembers enum com.sikderithub.viewsgrow.utils.LinkType{
+    *;
+}
 -keepclassmembers class com.sikderithub.viewsgrow.notification.* {
   *;
 }
+
+-keepattributes SourceFile,LineNumberTable        # Keep file names and line numbers.
+-keep public class * extends java.lang.Exception  # Optional: Keep custom exceptions.
+-keep class * implements java.io.Serializable { *; }
+-keep class com.sikderithub.viewsgrow.Model.** { *; }

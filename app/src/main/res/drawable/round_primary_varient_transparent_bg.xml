@@ -3,7 +3,7 @@
     <item>
         <shape xmlns:android="http://schemas.android.com/apk/res/android">
             <solid android:color="@color/colorPrimaryVariantTransparent"/>
-            <corners android:radius="@dimen/_15sdp"/>
+            <corners android:radius="@dimen/_5sdp"/>
         </shape>
     </item>
 

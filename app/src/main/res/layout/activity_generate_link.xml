@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -238,235 +238,150 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
-                    <HorizontalScrollView
-                        android:layout_marginTop="@dimen/_12sdp"
-                        android:layout_marginEnd="@dimen/_10sdp"
-                        android:layout_marginStart="@dimen/_10sdp"
-                        android:padding="@dimen/_8sdp"
-                        android:background="@drawable/round_white_bg"
-                        android:scrollbars="none"
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:elevation="@dimen/_12sdp"
+                        android:layout_margin="@dimen/_8sdp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
-                        <RadioGroup
-                            android:orientation="horizontal"
-                            android:id="@+id/domainRadioGroup"
+
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:paddingTop="@dimen/_20sdp"
+                            android:id="@+id/recyDomain"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="16dp"
+                            android:background="@drawable/bg_white_round_top"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintHorizontal_bias="0.0"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:paddingEnd="@dimen/_10sdp"
+                            android:paddingStart="@dimen/_10sdp"
+                            android:textColor="@color/Black"
+                            android:background="@drawable/bg_white_round_top"
+                            android:layout_marginStart="@dimen/_20sdp"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            android:text="Available domain for you"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"/>
-                    </HorizontalScrollView>
 
-                    <LinearLayout
-                        android:visibility="gone"
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/layoutSubscriptionDomain"
+                        android:elevation="@dimen/_12sdp"
+                        android:layout_margin="@dimen/_8sdp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:paddingTop="@dimen/_20sdp"
+                            android:id="@+id/recyDomainSubscription"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="16dp"
+                            android:background="@drawable/bg_white_round_top"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintHorizontal_bias="0.0"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingEnd="@dimen/_10sdp"
+                            android:paddingStart="@dimen/_10sdp"
+                            android:textColor="@color/Black"
+                            android:background="@drawable/bg_white_round_top"
+                            android:layout_marginStart="@dimen/_20sdp"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            android:text="Our Amazing Domains"
+                            app:colorSpace="150dp"
+                            app:colorSpeed="4dp"/>
+
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/layoutSuggestionDomain"
+                        android:elevation="@dimen/_12sdp"
+                        android:layout_margin="@dimen/_8sdp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:paddingTop="@dimen/_20sdp"
+                            android:id="@+id/recyDomainSuggestion"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="16dp"
+                            android:background="@drawable/bg_white_round_top"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintHorizontal_bias="0.0"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingEnd="@dimen/_10sdp"
+                            android:paddingStart="@dimen/_10sdp"
+                            android:textColor="@color/Black"
+                            android:background="@drawable/bg_white_round_top"
+                            android:layout_marginStart="@dimen/_20sdp"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            android:text="Domains as your channel name"
+                            app:colorSpace="150dp"
+                            app:colorSpeed="4dp"/>
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/layoutSubdomain"
-                        android:layout_marginEnd="@dimen/_10sdp"
-                        android:layout_marginStart="@dimen/_10sdp"
-                        android:gravity="center"
-                        android:layout_marginTop="@dimen/_12sdp"
-                        android:padding="@dimen/_7sdp"
-                        android:weightSum="4"
-                        android:background="@drawable/round_white_bg"
-                        android:orientation="horizontal"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-                        <LinearLayout
-                            android:gravity="center"
-                            android:textColor="@color/colorPrimaryVariant"
-                            android:fontFamily="@font/ubuntu_bold"
-                            android:layout_weight="3.5"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content">
-                            <FrameLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content">
-                                <HorizontalScrollView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content">
-                                    <RadioGroup
-                                        android:orientation="horizontal"
-                                        android:id="@+id/subdomainRadioGroup"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"/>
-                                </HorizontalScrollView>
-                                <TextView
-                                    android:id="@+id/txtSubdomain"
-                                    android:textColor="@color/colorPrimaryVariant"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"/>
-                            </FrameLayout>
-                        </LinearLayout>
-
-
-                        <ImageView
-                            android:id="@+id/imgClearSubdomain"
-                            android:src="@drawable/ic_clear_black_24dp"
-                            android:layout_weight=".5"
-                            android:layout_width="@dimen/_20sdp"
-                            android:layout_height="@dimen/_20sdp"/>
-                    </LinearLayout>
-                    <LinearLayout
-                        android:visibility="gone"
-                        android:id="@+id/layoutSubdomainSugg"
-                        android:layout_marginEnd="@dimen/_10sdp"
-                        android:layout_marginStart="@dimen/_10sdp"
-                        android:gravity="center"
-                        android:layout_marginTop="@dimen/_12sdp"
-                        android:padding="@dimen/_7sdp"
-                        android:background="@drawable/round_white_bg"
-                        android:orientation="vertical"
+                        android:elevation="@dimen/_12sdp"
+                        android:layout_margin="@dimen/_8sdp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
 
-                        <TextView
-                            android:textColor="@color/Green"
-                            android:gravity="center"
-                            android:text="You can also add custom subdomain to your link, Like this"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"/>
 
-
-                        <LinearLayout
-                            android:layout_marginTop="@dimen/_4sdp"
-                            android:weightSum="4"
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:paddingTop="@dimen/_20sdp"
+                            android:id="@+id/recySubDomain"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content">
-                            <LinearLayout
-                                android:gravity="center"
-                                android:textColor="@color/colorPrimaryVariant"
-                                android:fontFamily="@font/ubuntu_bold"
-                                android:layout_weight="3.5"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content">
-                                <FrameLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content">
-                                    <ScrollView
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content">
-                                        <RadioGroup
-                                            android:orientation="vertical"
-                                            android:id="@+id/subdomainSuggRadioGroup"
-                                            android:layout_width="wrap_content"
-                                            android:layout_height="wrap_content"/>
-                                    </ScrollView>
-                                    <TextView
-                                        android:id="@+id/txtSubdomainSugg"
-                                        android:textColor="@color/colorPrimaryVariant"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"/>
-                                </FrameLayout>
-                            </LinearLayout>
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="16dp"
+                            android:background="@drawable/bg_white_round_top"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintHorizontal_bias="0.0"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
 
 
-                            <ImageView
-                                android:id="@+id/imgClearSubdomainSug"
-                                android:src="@drawable/ic_clear_black_24dp"
-                                android:layout_weight=".5"
-                                android:layout_width="@dimen/_20sdp"
-                                android:layout_height="@dimen/_20sdp"/>
-                        </LinearLayout>
-                    </LinearLayout>
 
-                    <LinearLayout
-                        android:orientation="vertical"
-                        android:visibility="gone"
-                        android:id="@+id/layoutDomainSuggestion"
-                        android:background="@drawable/round_white_bg"
-                        android:layout_marginTop="@dimen/_12sdp"
-                        android:layout_marginEnd="@dimen/_10sdp"
-                        android:layout_marginStart="@dimen/_10sdp"
-                        android:padding="@dimen/_8sdp"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                        <TextView
-                            android:gravity="center"
-                            android:textColor="@color/Green"
-                            android:layout_margin="@dimen/_5sdp"
-                            android:text="Be a professional content creator, create premium domain for your video link."
+                        <com.hanks.htextview.rainbow.RainbowTextView
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"/>
-
-                        <HorizontalScrollView
-                            android:background="@drawable/round_white_bg"
-                            android:scrollbars="none"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content">
-                            <RadioGroup
-                                android:orientation="vertical"
-                                android:id="@+id/domainSugRadioGroup"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"/>
-                        </HorizontalScrollView>
-
-                    </LinearLayout>
-
-
-                    <LinearLayout
-                        android:layout_marginEnd="@dimen/_10sdp"
-                        android:layout_marginStart="@dimen/_10sdp"
-                        android:gravity="center"
-                        android:layout_marginTop="@dimen/_12sdp"
-                        android:padding="@dimen/_7sdp"
-                        android:weightSum="4"
-                        android:background="@drawable/round_white_bg"
-                        android:orientation="horizontal"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-                        <TextView
-
-                            android:textSize="@dimen/_11sdp"
-                            android:id="@+id/txtGenLink"
-                            android:gravity="center"
+                            android:layout_height="wrap_content"
+                            android:paddingTop="@dimen/_5sdp"
+                            android:paddingBottom="@dimen/_5sdp"
+                            android:paddingEnd="@dimen/_10sdp"
+                            android:paddingStart="@dimen/_10sdp"
                             android:textColor="@color/colorPrimaryVariant"
-                            android:fontFamily="@font/ubuntu_bold"
-                            android:layout_weight="3.5"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"/>
+                            android:background="#3F51B5"
+                            android:layout_marginStart="@dimen/_20sdp"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            android:text="Link By Your Channel Name"
+                            app:colorSpace="150dp"
+                            app:colorSpeed="4dp"/>
 
-
-                        <ImageView
-                            android:id="@+id/imgCopyLink"
-                            android:src="@drawable/copy"
-                            android:layout_weight=".5"
-                            android:layout_width="@dimen/_20sdp"
-                            android:layout_height="@dimen/_20sdp"/>
-                    </LinearLayout>
-
-
-
-                    <LinearLayout
-                        android:layout_marginEnd="@dimen/_10sdp"
-                        android:layout_marginStart="@dimen/_10sdp"
-                        android:gravity="center"
-                        android:layout_marginTop="@dimen/_12sdp"
-                        android:padding="@dimen/_7sdp"
-                        android:weightSum="4"
-                        android:background="@drawable/round_white_bg"
-                        android:orientation="horizontal"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-                        <EditText
-                            android:textSize="@dimen/_11sdp"
-                            android:maxLength="30"
-                            android:digits="0123456789qwertzuiopasdfghjklyxcvbnmQWERTZUIOPASDFGHJKLYXCVBNM-_"
-                            android:id="@+id/edtSuffix"
-                            android:background="@color/transparent"
-                            android:gravity="center"
-                            android:textColor="@color/colorPrimaryVariant"
-                            android:fontFamily="@font/ubuntu_bold"
-                            android:text=""
-                            android:hint="Suffix"
-                            android:layout_weight="3.5"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"/>
-
-
-                        <ImageView
-                            android:id="@+id/imgSuffixStatus"
-                            android:src="@drawable/copy"
-                            android:layout_weight=".5"
-                            android:layout_width="@dimen/_20sdp"
-                            android:layout_height="@dimen/_20sdp"/>
-                    </LinearLayout>
+                    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
 
@@ -506,4 +421,4 @@
 
     </LinearLayout>
 
-</ScrollView>
+</androidx.core.widget.NestedScrollView>

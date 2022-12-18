@@ -104,6 +104,15 @@ class ThumbViewHolder(val binding : LayoutLinkThumbnailBinding) : RecyclerView.V
             binding.imgLogo.setUrl(it)
         }
 
+        if(!link.chLogo.isNullOrEmpty()){
+            binding.imgLogo.setUrl(link.chLogo!!)
+
+        }else{
+            if(!link.profilePic.isNullOrEmpty()){
+                binding.imgLogo.setUrl(link.profilePic!!)
+            }
+        }
+
         link.metaImg?.let {
             binding.imgThumb.setUrl(it)
         }
@@ -112,9 +121,17 @@ class ThumbViewHolder(val binding : LayoutLinkThumbnailBinding) : RecyclerView.V
             binding.txtTitle.text = it
         }
 
-        link.chName?.let {
-            binding.txtChannelName.text = it
+        if(!link.chName.isNullOrEmpty()){
+            binding.txtChannelName.text = link.chName
+
+        }else{
+            if(!link.full_name.isNullOrEmpty()){
+                binding.txtChannelName.text = link.full_name
+            }else{
+                binding.txtChannelName.text = "Anonymous"
+            }
         }
+
 
         link.nLink?.let {link->
             binding.root.setOnClickListener {

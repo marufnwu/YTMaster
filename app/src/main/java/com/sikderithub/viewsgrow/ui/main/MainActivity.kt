@@ -72,7 +72,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         userAdapter = UserListAdapter(this, userList, ViewType.ROUND)
         channelAdapter = ChannelsAdapter(this, channelList, ChannelsAdapter.ViewType.ROUND)
 
-        if (CommonMethod.haveInternet(getSystemService(CONNECTIVITY_SERVICE) as ConnectivityManager)){
+        if (CommonMethod.haveInternet(this)){
             initViews()
             addObServer()
             initClickListener()
@@ -83,7 +83,6 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                 .setPositiveButton("Retry"){
                     it.hideDialog()
                     startActivity(intent)
-
                 }
                 .build()
                 .showDialog()
@@ -319,7 +318,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                        it.data?.let {
                            if(!it.mainBanner.error){
                                binding.shimmer.stopShimmer()
-                               binding.imgMainBanner.addBanner(it.mainBanner)
+                               binding.imgMainBanner.addBanner(it.mainBanner, this)
                            }
                        }
                     }

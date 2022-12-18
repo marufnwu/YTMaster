@@ -21,16 +21,16 @@ android {
         applicationId "com.sikderithub.viewsgrow"
         minSdk 21
         targetSdk 32
-        versionCode 6
-        versionName "1.0.6"
+        versionCode 11
+        versionName "1.0.11"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        signingConfig signingConfigs.release
+        signingConfig signingConfigs.debug
     }
 
     buildTypes {
         debug {
-            shrinkResources false
+            shrinkResources true
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
@@ -134,6 +134,12 @@ dependencies {
 
     implementation("com.android.billingclient:billing-ktx:5.1.0")
     implementation 'com.facebook.shimmer:shimmer:0.5.0'
+
+    //    for animated text
+    def htextview_version = "0.1.6"
+    implementation "com.hanks:htextview-base:$htextview_version"
+    implementation "com.hanks:htextview-rainbow:$htextview_version"     // optional
+
 
 
 }

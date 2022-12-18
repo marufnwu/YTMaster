@@ -19,4 +19,6 @@ class Link(
     @SerializedName("click"    ) var click    : Int?    = null,
     @SerializedName("chLogo"    ) var chLogo    : String?    = null,
     @SerializedName("chName"    ) var chName    : String?    = null,
+    @SerializedName("full_name"    ) var full_name    : String?    = null,
+    @SerializedName("profilePic"    ) var profilePic    : String?    = null,
 )

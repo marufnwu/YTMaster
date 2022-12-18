@@ -59,15 +59,15 @@ class YtRepo(private val api: MyApi) {
         return api.getHighlightedChannel(currPage, totalPage)
     }
 
-    suspend fun getCreateNewDomainPage(): Response<GenericResponse<CreateNewDomainPage>> {
-        return api.createNewDomainPage()
+    suspend fun getCreateNewDomainPage(domainType: String): Response<GenericResponse<CreateNewDomainPage>> {
+        return api.createNewDomainPage(domainType)
     }
     suspend fun getCreateNewSubDomainPage(): Response<GenericResponse<CreateNewDomainPage>> {
         return api.createNewSubDomainPage()
     }
 
-    suspend fun requestDomain( chName:String): Response<GenericResponse<Transaction>> {
-        return api.createDomainRef(chName)
+    suspend fun requestDomain(chName: String, domainType: String): Response<GenericResponse<Transaction>> {
+        return api.createDomainRef(chName, domainType)
     }
     suspend fun requestSubDomain( chName:String): Response<GenericResponse<Transaction>> {
         return api.createSubDomainRef(chName)

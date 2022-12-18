@@ -3,10 +3,18 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Android Projects/YT Master/app/src/main/res/drawable-v23/splash_scereen_bg.xml" value="0.1395" />
+        <entry key="..\:/Android Projects/YT Master/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.1395" />
+        <entry key="..\:/Android Projects/YT Master/app/src/main/res/drawable/bg_white_round_top.xml" value="0.159" />
         <entry key="..\:/Android Projects/YT Master/app/src/main/res/drawable/bottom_sheet_bg.xml" value="0.1485" />
+        <entry key="..\:/Android Projects/YT Master/app/src/main/res/drawable/checkbox_selector.xml" value="0.159" />
+        <entry key="..\:/Android Projects/YT Master/app/src/main/res/drawable/comp_view_circle_gray.xml" value="0.1395" />
         <entry key="..\:/Android Projects/YT Master/app/src/main/res/drawable/google_logo.xml" value="0.159" />
         <entry key="..\:/Android Projects/YT Master/app/src/main/res/drawable/round_background.xml" value="0.1755" />
+        <entry key="..\:/Android Projects/YT Master/app/src/main/res/drawable/round_primary_varient_transparent_bg.xml" value="0.159" />
         <entry key="..\:/Android Projects/YT Master/app/src/main/res/drawable/round_pripary_variant_border.xml" value="0.159" />
+        <entry key="..\:/Android Projects/YT Master/app/src/main/res/drawable/splash_scereen_bg.xml" value="0.159" />
+        <entry key="..\:/Android Projects/YT Master/app/src/main/res/drawable/transparent_background.xml" value="0.1395" />
         <entry key="..\:/Android Projects/YT Master/app/src/main/res/layout/activity_all_link.xml" value="0.25" />
         <entry key="..\:/Android Projects/YT Master/app/src/main/res/layout/activity_domain_create.xml" value="0.25" />
         <entry key="..\:/Android Projects/YT Master/app/src/main/res/layout/activity_generate_link.xml" value="0.25" />
@@ -15,19 +23,24 @@
         <entry key="..\:/Android Projects/YT Master/app/src/main/res/layout/activity_main.xml" value="0.25" />
         <entry key="..\:/Android Projects/YT Master/app/src/main/res/layout/activity_my_link.xml" value="0.25" />
         <entry key="..\:/Android Projects/YT Master/app/src/main/res/layout/activity_profile.xml" value="0.25" />
+        <entry key="..\:/Android Projects/YT Master/app/src/main/res/layout/activity_splash.xml" value="0.25" />
         <entry key="..\:/Android Projects/YT Master/app/src/main/res/layout/activity_subdomain_create.xml" value="0.1" />
         <entry key="..\:/Android Projects/YT Master/app/src/main/res/layout/activity_user_details.xml" value="0.25" />
         <entry key="..\:/Android Projects/YT Master/app/src/main/res/layout/channel_item_layout.xml" value="0.10989583333333333" />
         <entry key="..\:/Android Projects/YT Master/app/src/main/res/layout/custom_loading_dialog_layout.xml" value="0.10989583333333333" />
         <entry key="..\:/Android Projects/YT Master/app/src/main/res/layout/dialog_generic.xml" value="0.25" />
         <entry key="..\:/Android Projects/YT Master/app/src/main/res/layout/generate_link_item_layout.xml" value="0.25" />
+        <entry key="..\:/Android Projects/YT Master/app/src/main/res/layout/layout_domain_item.xml" value="0.24895833333333334" />
         <entry key="..\:/Android Projects/YT Master/app/src/main/res/layout/layout_link_thumbnail.xml" value="0.10989583333333333" />
         <entry key="..\:/Android Projects/YT Master/app/src/main/res/layout/layout_nav_bottom_sheet.xml" value="0.24895833333333334" />
+        <entry key="..\:/Android Projects/YT Master/app/src/main/res/layout/layout_subdomain_item.xml" value="0.24895833333333334" />
         <entry key="..\:/Android Projects/YT Master/app/src/main/res/layout/layout_webview.xml" value="0.25" />
         <entry key="..\:/Android Projects/YT Master/app/src/main/res/layout/round_channel_item_layout.xml" value="0.25" />
         <entry key="..\:/Android Projects/YT Master/app/src/main/res/layout/round_user_item_layout.xml" value="0.10989583333333333" />
         <entry key="..\:/Android Projects/YT Master/app/src/main/res/layout/simple_edittext_dialog.xml" value="0.25" />
         <entry key="..\:/Android Projects/YT Master/app/src/main/res/menu/menu_domain_request.xml" value="0.25" />
+        <entry key="..\:/Android Projects/YT Master/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.1395" />
+        <entry key="..\:/Android Projects/YT Master/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.1395" />
       </map>
     </option>
   </component>

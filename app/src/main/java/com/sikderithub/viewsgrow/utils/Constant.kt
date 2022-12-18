@@ -1,7 +1,10 @@
 package com.sikderithub.viewsgrow.utils
 
+import com.sikderithub.viewsgrow.Model.Profile
+
 object Constant {
 
+    const val DOMAIN_PURCHASE_TYPE: String = "domain_purchase_type"
     const val CUSTOM_SUB_DOMAIN: String = "CUSTOM_SUBDOMAIN_KEY"
     const val CUSTOM_DOMAIN: String = "CUSTOM_DOMAIN_KEY"
     const val ACTIVITY: String = "NotificationActivity"
@@ -15,5 +18,7 @@ object Constant {
 
     const val ACTIVITY_NAME = "Name_Of_Activity"
     const val WEB_URL = "Web_URL"
+
+    var OTHER_USER_PROFILE : Profile? = null
 
 }

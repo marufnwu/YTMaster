@@ -337,11 +337,9 @@ object CommonMethod {
             .showDialog()
     }
 
-    fun haveInternet(connectivityManager: ConnectivityManager?): Boolean {
+    fun haveInternet(context: Context): Boolean {
+        var connectivityManager : ConnectivityManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         return when {
-            connectivityManager==null -> {
-                false
-            }
             Build.VERSION.SDK_INT >= 23 -> {
                 val network = connectivityManager.activeNetwork
                 val capabilities = connectivityManager.getNetworkCapabilities(network) ?: return false
@@ -360,7 +358,7 @@ object CommonMethod {
 }
 
 
-public enum class LinkType{
+enum class LinkType{
     YOUTUBE,
     FACEBOOK,
     INSTAGRAM,

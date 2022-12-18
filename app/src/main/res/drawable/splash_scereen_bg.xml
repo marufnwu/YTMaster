@@ -3,6 +3,8 @@
 
     <item android:drawable="@color/purple_700"/>
     <item
+        android:width="@dimen/_80sdp"
+        android:height="@dimen/_80sdp"
         android:gravity="center"
-        android:drawable="@drawable/ic_launcher_foreground"/>
+        android:drawable="@drawable/icon"/>
 </layer-list>

@@ -50,9 +50,12 @@ class ProfileActivity : AppCompatActivity() {
         linkAdapter = LinkListAdapter(this, linkList, LinkListAdapter.ViewType.LINK)
 
 
-        intent?.getSerializableExtra(Constant.OTHER_PROFILE)?.let {
-             otherProfile = it as Profile
-         }
+
+        intent?.getBooleanExtra(Constant.OTHER_PROFILE, false)?.let {
+            if(it){
+                otherProfile = Constant.OTHER_USER_PROFILE
+            }
+        }
 
         init()
         addObserver()
@@ -255,12 +258,12 @@ class ProfileActivity : AppCompatActivity() {
             }
 
             if(CommonMethod.isYoutubeChanelLinkValid(channel)!=null){
-                val shortName = CommonMethod.isYoutubeChanelLinkValid(channel)
+
                 Coroutines.main {
                     try {
                         val res = (application as MyApp)
                             .myApi
-                            .updateChannel(shortName)
+                            .updateChannel(channel)
 
                         if(res.isSuccessful && res.body()!=null){
                             val body = res.body()!!

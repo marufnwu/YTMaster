@@ -39,6 +39,7 @@ class SubdomainCreateActivity : AppCompatActivity() {
         intent?.let {
             it.getStringExtra(Constant.CUSTOM_SUB_DOMAIN)?.let {
                 binding.chName.editText?.setText(it)
+                binding.chName.isEnabled = false
             }
         }
 
@@ -147,7 +148,12 @@ class SubdomainCreateActivity : AppCompatActivity() {
             return null
         }
 
-        return BuildConfig.BASE_URL+"payment/pay.php?gatewayOrderId=${data.orderId}&transactionRef=${data.reference}&type=${data.type}&gateway=${data.gateway}"
+        if(data.link.isNotEmpty()){
+            return data.link
+        }
+
+        return null
+
     }
 
     private fun setPlanList(list: List<DomainPlan>) {
@@ -155,7 +161,7 @@ class SubdomainCreateActivity : AppCompatActivity() {
             binding.progress.visibility = View.GONE
             binding.txtError.visibility = View.GONE
             binding.layoutPackage.visibility = View.VISIBLE
-            binding.txtPrice.text = "Price Rs. ${list.get(0).price}"
+            binding.txtPrice.text = "Price Rs. ${list.get(0).price} +GST"
         }else{
             binding.progress.visibility = View.GONE
             binding.txtError.visibility = View.VISIBLE

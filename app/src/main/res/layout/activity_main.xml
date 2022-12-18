@@ -318,6 +318,59 @@
 
 
             </LinearLayout>
+            
+            
+            
+            <LinearLayout
+                android:layout_marginTop="@dimen/_20sdp"
+                android:background="@color/colorPrimary"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <LinearLayout
+                    android:gravity="center"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content">
+
+
+                    <pl.droidsonroids.gif.GifImageView
+                        android:src="@drawable/facebook"
+                        android:layout_margin="@dimen/_8sdp"
+                        android:layout_width="@dimen/_50sdp"
+                        android:layout_height="@dimen/_50sdp"/>
+
+                </LinearLayout>
+                <LinearLayout
+                    android:gravity="center"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content">
+
+
+                    <pl.droidsonroids.gif.GifImageView
+                    android:src="@drawable/youtube"
+                    android:layout_margin="@dimen/_8sdp"
+                    android:layout_width="@dimen/_50sdp"
+                    android:layout_height="@dimen/_50sdp"/>
+
+                </LinearLayout>
+                <LinearLayout
+                    android:gravity="center"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content">
+
+
+                    <pl.droidsonroids.gif.GifImageView
+                        android:src="@drawable/instagram"
+                        android:layout_margin="@dimen/_8sdp"
+                        android:layout_width="@dimen/_50sdp"
+                        android:layout_height="@dimen/_50sdp"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
 
             <View
                 android:layout_width="match_parent"

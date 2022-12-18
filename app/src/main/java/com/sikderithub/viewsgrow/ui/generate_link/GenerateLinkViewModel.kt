@@ -1,8 +1,10 @@
 package com.sikderithub.viewsgrow.ui.generate_link
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.google.gson.Gson
 import com.sikderithub.viewsgrow.Model.*
 import com.sikderithub.viewsgrow.repo.YtRepo
 import com.sikderithub.viewsgrow.repo.network.MyApi
@@ -57,8 +59,6 @@ class GenerateLinkViewModel(private val myApi: MyApi) : ViewModel() {
 
     fun getLinkGenPage(link: String) {
 
-
-
         Coroutines.main {
             try {
                 _linkGenPage.postValue(ScreenState.Loading())
@@ -90,6 +90,7 @@ class GenerateLinkViewModel(private val myApi: MyApi) : ViewModel() {
                     _linkGenPage.postValue(ScreenState.Error(null, res.message()))
                 }
             }catch (e : Exception){
+                e.printStackTrace()
                 _linkGenPage.postValue(ScreenState.Error(null, e.message!!))
             }
         }
@@ -169,8 +170,9 @@ class GenerateLinkViewModel(private val myApi: MyApi) : ViewModel() {
 
 
         Coroutines.main {
-            try{
+
                 val linkData = fullLinkData.value!!
+                Log.d("LinkData", Gson().toJson(linkData))
                 val intent =  if (CommonMethod.getIntentLink(oLink) == null)  "" else CommonMethod.getIntentLink(oLink)!!
                 val subDom  = if (linkData.subdomain == null)  "" else linkData.subdomain!!
                 val linkType = if (linkData.type == null)  "" else linkData.type?.name!!
@@ -180,9 +182,7 @@ class GenerateLinkViewModel(private val myApi: MyApi) : ViewModel() {
                 }else{
                     publishLinkRes.postValue(ScreenState.Error(message = "Something went wrong"))
                 }
-            }catch (e:Exception){
-                publishLinkRes.postValue(ScreenState.Error(message = "Something went wrong"))
-            }
+
         }
     }
 
