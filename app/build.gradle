@@ -21,8 +21,8 @@ android {
         applicationId "com.sikderithub.viewsgrow"
         minSdk 21
         targetSdk 32
-        versionCode 11
-        versionName "1.0.11"
+        versionCode 12
+        versionName "1.0.12"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         signingConfig signingConfigs.debug
@@ -30,8 +30,8 @@ android {
 
     buildTypes {
         debug {
-            shrinkResources true
-            minifyEnabled true
+            shrinkResources false
+            minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
 

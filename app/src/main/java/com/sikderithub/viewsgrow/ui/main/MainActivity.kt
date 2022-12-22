@@ -185,6 +185,25 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                 mainBottomSheet.show(supportFragmentManager, "MainBottomSheet")
             }
         }
+
+        binding.imgFacebook.setOnClickListener {
+
+            Constant.facebookLink?.let {
+                CommonMethod.openLink(it, this)
+            }
+        }
+        binding.imgYoutube.setOnClickListener {
+
+            Constant.youtubeLink?.let {
+                CommonMethod.openLink(it, this)
+            }
+        }
+        binding.imgInstagram.setOnClickListener {
+
+            Constant.instagramLink?.let {
+                CommonMethod.openLink(it, this)
+            }
+        }
     }
 
     private fun initClickListener() {
@@ -319,8 +338,17 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                            if(!it.mainBanner.error){
                                binding.shimmer.stopShimmer()
                                binding.imgMainBanner.addBanner(it.mainBanner, this)
+                               binding.imgLeft.addBanner(it.honeBannerLeft, this)
+                               binding.imgRight.addBanner(it.homeBannerRight, this)
                            }
+
+                           Constant.facebookLink = it.facebookLink
+                           Constant.youtubeLink = it.youtubeLink
+                           Constant.instagramLink = it.instagramLink
+
                        }
+
+
                     }
                     is ScreenState.Loading ->{
 

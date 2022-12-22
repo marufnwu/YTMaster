@@ -1,4 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:alpha="2" android:color="@color/colorPrimaryVariant" android:state_focused="true"/>
-    <item android:alpha="3" android:color="@color/colorPrimaryVariant" />
+    <item android:alpha="2"
+        android:color="@color/colorPrimaryVariant"
+        android:state_focused="true"/>
+    <item android:alpha="3"
+        android:color="@color/colorPrimaryVariant" />
 </selector>

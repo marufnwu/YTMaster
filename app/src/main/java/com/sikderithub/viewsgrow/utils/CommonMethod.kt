@@ -201,6 +201,11 @@ object CommonMethod {
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                 intent.setPackage("com.google.android.youtube")
                 context.startActivity(intent)
+            }else if(linkHost.equals("www.facebook.com") || linkHost.equals("facebook.com") || linkHost.equals("fb.com") || linkHost.equals("fb.me")){
+                val intent = Intent(Intent.ACTION_VIEW, uri)
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                intent.setPackage("com.facebook.katana")
+                context.startActivity(intent)
             }else if (link.startsWith("http://") || link.startsWith("https://")) {
                 val intent = Intent(Intent.ACTION_VIEW, Uri.parse(link))
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
@@ -209,7 +214,13 @@ object CommonMethod {
 
 
         }catch (e : Exception){
-           context.shortToast("Can't open")
+            try {
+                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(link))
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                context.startActivity(intent)
+            }catch (e:Exception){
+                context.shortToast("Can't open")
+            }
         }
     }
 

@@ -104,7 +104,7 @@ class ChannelsAdapter(val context: Context, val channels:MutableList<HighLighted
 
 
                 it.videoCount?.let {
-                    binding.txtView.text = "Videos: ${it}"
+                    binding.txtVideo.text = "Videos: ${it}"
                 }
             }
 

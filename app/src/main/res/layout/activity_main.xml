@@ -257,6 +257,38 @@
 
 
             <LinearLayout
+                android:weightSum="2"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/imgLeft"
+                    android:scaleType="fitXY"
+                    android:layout_margin="@dimen/_5sdp"
+                    android:src="@drawable/sign_up"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/_100sdp">
+
+                </ImageView>
+
+                <ImageView
+                    android:id="@+id/imgRight"
+                    android:scaleType="fitXY"
+                    android:layout_margin="@dimen/_5sdp"
+                    android:src="@drawable/sign_up"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/_100sdp"/>
+
+
+
+            </LinearLayout>
+
+
+
+            <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
@@ -318,7 +350,7 @@
 
 
             </LinearLayout>
-            
+
             
             
             <LinearLayout
@@ -335,6 +367,7 @@
 
 
                     <pl.droidsonroids.gif.GifImageView
+                        android:id="@+id/imgFacebook"
                         android:src="@drawable/facebook"
                         android:layout_margin="@dimen/_8sdp"
                         android:layout_width="@dimen/_50sdp"
@@ -349,7 +382,8 @@
 
 
                     <pl.droidsonroids.gif.GifImageView
-                    android:src="@drawable/youtube"
+                        android:id="@+id/imgYoutube"
+                        android:src="@drawable/youtube"
                     android:layout_margin="@dimen/_8sdp"
                     android:layout_width="@dimen/_50sdp"
                     android:layout_height="@dimen/_50sdp"/>
@@ -363,6 +397,7 @@
 
 
                     <pl.droidsonroids.gif.GifImageView
+                        android:id="@+id/imgInstagram"
                         android:src="@drawable/instagram"
                         android:layout_margin="@dimen/_8sdp"
                         android:layout_width="@dimen/_50sdp"

@@ -21,4 +21,8 @@ object Constant {
 
     var OTHER_USER_PROFILE : Profile? = null
 
+    var facebookLink:String? = null
+    var youtubeLink:String? = null
+    var instagramLink:String? = null
+
 }

@@ -44,7 +44,7 @@ object MyExtensions {
     }
 
     fun ImageView.setDrawableImage(@DrawableRes resource: Int, applyCircle: Boolean = false) {
-        val glide = Glide.with(this).load(resource).diskCacheStrategy(DiskCacheStrategy.NONE)
+        val glide = Glide.with(this).load(resource)
         if (applyCircle) {
             glide.apply(RequestOptions.circleCropTransform()).into(this)
         } else {
@@ -53,7 +53,7 @@ object MyExtensions {
     }
 
     fun ImageView.setLocalImage(uri: Uri, applyCircle: Boolean = false) {
-        val glide = Glide.with(this).load(uri).diskCacheStrategy(DiskCacheStrategy.NONE)
+        val glide = Glide.with(this).load(uri)
         if (applyCircle) {
             glide.apply(RequestOptions.circleCropTransform()).into(this)
         } else {
@@ -61,7 +61,7 @@ object MyExtensions {
         }
     }
     fun ImageView.setUrl(uri: String, applyCircle: Boolean = false) {
-        val glide = Glide.with(this).load(uri).diskCacheStrategy(DiskCacheStrategy.NONE)
+        val glide = Glide.with(this).load(uri)
         if (applyCircle) {
             glide.apply(RequestOptions.circleCropTransform()).into(this)
         } else {
@@ -80,7 +80,7 @@ object MyExtensions {
 
             val glide = Glide.with(this).setDefaultRequestOptions(placeholderRequest)
                 .load(banner.imageUrl)
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
+
 
 
             if (applyCircle) {
