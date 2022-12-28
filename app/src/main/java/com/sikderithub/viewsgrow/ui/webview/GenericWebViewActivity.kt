@@ -1,18 +1,17 @@
 package com.sikderithub.viewsgrow.ui.webview
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.graphics.Bitmap
-import android.net.http.SslError
-import androidx.appcompat.app.AppCompatActivity
+import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.webkit.*
 import com.sikderithub.viewsgrow.databinding.ActivityGenericWebviewBinding
 import com.sikderithub.viewsgrow.utils.BaseActivity
 import com.sikderithub.viewsgrow.utils.Constant
 import com.sikderithub.viewsgrow.utils.LoadingDialog
-import com.sikderithub.viewsgrow.utils.MyExtensions.shortToast
+
 
 class GenericWebViewActivity : BaseActivity() {
     lateinit var binding: ActivityGenericWebviewBinding
@@ -58,6 +57,8 @@ class GenericWebViewActivity : BaseActivity() {
             super.onReceivedTouchIconUrl(view, url, precomposed)
         }
 
+
+
     }
 
     inner class MyWebCViewClient : WebViewClient(){
@@ -73,6 +74,21 @@ class GenericWebViewActivity : BaseActivity() {
             binding.progress.visibility = View.VISIBLE
             super.onPageStarted(view, url, favicon)
         }
+
+        override fun shouldOverrideUrlLoading(
+            view: WebView?,
+            request: WebResourceRequest?
+        ): Boolean {
+
+            if (request!!.url.toString().startsWith("tel:") || request.url.toString().startsWith("whatsapp:")) {
+                val intent = Intent(Intent.ACTION_VIEW)
+                intent.data = Uri.parse(request.url.toString())
+                startActivity(intent)
+                return true
+            }
+            return false
+        }
+
 
 
 
